@@ -1,0 +1,12 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Update OS
+    package:
+      name: '*'
+      state: latest
+
+  - name: Install package
+    package:
+        name: ['wget', 'apache2', 'php']
