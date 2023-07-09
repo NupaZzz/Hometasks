@@ -10,3 +10,40 @@
   - name: Install package
     package:
         name: ['wget', 'apache2', 'php']
+  
+  - name: Get config html
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/index.html
+      dest: /var/www/html/
+      mode: '0775'
+  
+  - name: Create dir
+    ansible.builtin.file:
+      path: /var/www/php
+      state: directory
+      mode: '0775'
+      owner: vagrant
+      group: vagrant
+
+  - name: Get config php
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/index.php
+      dest: /var/www/php/
+      mode: '0775'
+  
+  - name: Change ports.conf
+    lineinfile:
+      path: /etc/apache2/ports.conf
+      line: "Listen 81"
+      state: present
+  
+  - name: Change sites-enabled
+    lineinfile:
+      path: /etc/apache2/sites-enabled/000-default.conf
+      line: "<VirtualHost *:81>\nDocumentRoot /var/www/php\n</VirtualHost>"
+      state: present
+
+  - name: Apache2 restart
+    service:
+      name: apache2
+      state: restarted
