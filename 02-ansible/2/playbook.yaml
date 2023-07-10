@@ -53,3 +53,34 @@
       name: apache2
       state: restarted
 
+- name: proxy
+  hosts: proxy
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: apt update
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: ufw rules
+      ufw:
+        rule: "allow"
+        port: "{{ item }}"
+        proto: "tcp"
+      with_items:
+        - "22"
+        - "80"
+        - "8081"
+        - "8080"
+        - "8082"
+
+    - name: ufw enabled
+      ufw:
+        state: "enabled"
+        policy: "deny"
+        logging: "on"
+    
+    - name: Install packageS
+      package:
+        name: ['nginx']
