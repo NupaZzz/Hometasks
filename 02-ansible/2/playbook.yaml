@@ -8,17 +8,17 @@
       upgrade: yes
       update_cache: yes
   
-  - name: Install packageS
+  - name: install packageS
     package:
       name: ['apache2']
 
-  - name: Get config html
+  - name: get config html
     ansible.builtin.get_url:
       url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/index.html
       dest: /var/www/html/
       mode: '0775'
   
-  - name: Apache2 restart
+  - name: apache2 restart
     service:
       name: apache2
       state: restarted
@@ -33,22 +33,22 @@
       upgrade: yes
       update_cache: yes
   
-  - name: Install packageS
+  - name: install packageS
     package:
       name: ['apache2', 'php']
   
-  - name: Delete html
+  - name: delete html
     ansible.builtin.file:
       path: /var/www/html/index.html
       state: absent
 
-  - name: Get config php
+  - name: get config php
     ansible.builtin.get_url:
       url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/index.php
       dest: /var/www/html/
       mode: '0775'
   
-  - name: Apache2 restart
+  - name: apache2 restart
     service:
       name: apache2
       state: restarted
@@ -81,6 +81,17 @@
         policy: "deny"
         logging: "on"
     
-    - name: Install packageS
+    - name: install packageS
       package:
         name: ['nginx']
+
+    - name: get nginx config
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/default
+        dest: /etc/nginx/sites-available/
+        mode: '0775'
+    
+    - name: ngnix restart
+      service:
+        name: nginx
+        state: restarted
