@@ -1,0 +1,55 @@
+- name: html
+  hosts: html
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt update
+    apt:
+      upgrade: yes
+      update_cache: yes
+  
+  - name: Install packageS
+    package:
+      name: ['apache2']
+
+  - name: Get config html
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/index.html
+      dest: /var/www/html/
+      mode: '0775'
+  
+  - name: Apache2 restart
+    service:
+      name: apache2
+      state: restarted
+
+- name: php
+  hosts: php
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt update
+    apt:
+      upgrade: yes
+      update_cache: yes
+  
+  - name: Install packageS
+    package:
+      name: ['apache2', 'php']
+  
+  - name: Delete html
+    ansible.builtin.file:
+      path: /var/www/html/index.html
+      state: absent
+
+  - name: Get config php
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/02-ansible/config/index.php
+      dest: /var/www/html/
+      mode: '0775'
+  
+  - name: Apache2 restart
+    service:
+      name: apache2
+      state: restarted
+
