@@ -1,0 +1,25 @@
+- name: all
+  hosts: master
+  gather_facts: false
+  tasks:
+    - name: update dnf
+      become: yes
+      dnf:
+        name: "*"
+        state: latest
+
+    - name: add puppetserver rep
+      become: yes
+      dnf:
+        name: https://yum.puppet.com/puppet7-release-el-8.noarch.rpm  
+        state: present
+        disable_gpg_check: true
+    
+    - name: install puppetserver
+      become: yes
+      dnf:
+        name: puppetserver
+        enablerepo: https://yum.puppet.com/puppet7-release-el-8.noarch.rpm
+        disable_gpg_check: yes
+        state: present
+
