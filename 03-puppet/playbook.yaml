@@ -73,6 +73,9 @@
       service:
         name: firewalld
         state: restarted
+    
+    - name: run r10k
+      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p
 
 - name: slave
   hosts: slave
@@ -111,11 +114,19 @@
         name: puppet
         state: started
 
-    - name: open port
+    - name: open port 8140
       become: yes
       firewalld:
         zone: public
         port: 8140/tcp
+        permanent: true
+        state: enabled
+
+    - name: open port 80
+      become: yes
+      firewalld:
+        zone: public
+        port: 80/tcp
         permanent: true
         state: enabled
     
@@ -124,3 +135,6 @@
       service:
         name: firewalld
         state: restarted
+# install puppet wget
+# open port 80
+# create httpd start
