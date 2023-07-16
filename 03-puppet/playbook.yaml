@@ -29,6 +29,20 @@
         dest: /etc/puppetlabs/puppet/puppet.conf
         mode: '0664'
 
+    - name: add autosign
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/autosign.conf
+        dest: /etc/puppetlabs/puppet/autosign.conf
+        mode: '0664'
+
+    - name: create r10k
+      become: yes
+      file:
+        path: /etc/puppetlabs/r10k
+        state: directory
+        mode: '0755'
+
     - name: start ppserver
       become: yes
       service:
