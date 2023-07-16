@@ -1,8 +1,8 @@
 node slave1 {
-    package { 'apache2':
+    package { 'httpd:
         ensure => present,
     }
-    service { 'apache2':
+    service { 'httpd':
         ensure => running,
         enable => true,
         require => Package['apache2']
