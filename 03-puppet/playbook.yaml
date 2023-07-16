@@ -2,17 +2,17 @@
   hosts: master
   gather_facts: false
   tasks:
-    - name: add puppetserver rep
+    - name: add puppet rep
       become: yes
       dnf:
         name: https://yum.puppet.com/puppet7-release-el-8.noarch.rpm  
         state: present
         disable_gpg_check: true
     
-    - name: install puppetserver
+    - name: install puppet and git
       become: yes
       dnf:
-        name: puppetserver
+        name: [ 'puppetserver', 'git' ]
         state: present
     
     - name: get puppet config
@@ -20,27 +20,38 @@
       get_url:
         url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/puppetserver
         dest: /etc/sysconfig/
-        mode: '0664'
+        mode: '0755'
 
     - name: get puppet config
       become: yes
       get_url:
         url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/puppet.conf
         dest: /etc/puppetlabs/puppet/puppet.conf
-        mode: '0664'
+        mode: '0755'
 
     - name: add autosign
       become: yes
       get_url:
         url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/autosign.conf
         dest: /etc/puppetlabs/puppet/autosign.conf
-        mode: '0664'
+        mode: '0755'
 
-    - name: create r10k
+    - name: install r10k
+      become: yes
+      shell: sudo /opt/puppetlabs/puppet/bin/gem install r10k
+
+    - name: create r10k dir
       become: yes
       file:
         path: /etc/puppetlabs/r10k
         state: directory
+        mode: '0755'
+
+    - name: get r10k.yaml
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/r10k.yaml
+        dest: /etc/puppetlabs/r10k/r10k.yaml
         mode: '0755'
 
     - name: start ppserver
@@ -84,7 +95,7 @@
       become: yes
       lineinfile:
         path: /etc/hosts
-        line: "192.168.30.10 master master"
+        line: "192.168.30.10 master"
         state: present
     
     - name: get puppet config
@@ -113,5 +124,3 @@
       service:
         name: firewalld
         state: restarted
-
-
