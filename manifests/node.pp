@@ -1,1 +1,3 @@
-
+ package { 'httpd' :
+    ensure => present,
+    }
