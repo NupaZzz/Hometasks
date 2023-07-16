@@ -1,4 +1,3 @@
-include wget
 node slave1 {
   package { 'httpd' :
     ensure => present,
@@ -18,7 +17,7 @@ node slave1 {
     enable => true,
   }
 }
-
+include wget
 $slave2_packages = ['php','httpd']
 node slave2 {
   packages { $slave2_packages :
