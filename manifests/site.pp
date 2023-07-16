@@ -5,6 +5,6 @@ node slave1 {
     service { 'httpd':
         ensure => running,
         enable => true,
-        require => Package['httpd]
+        require => Package['httpd']
     }
 }
