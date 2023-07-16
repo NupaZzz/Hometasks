@@ -1,5 +1,5 @@
 node master {
-       package { 'httpd':
+       package { 'apache2':
               ensure => present,
        }
 }
