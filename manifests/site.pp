@@ -20,7 +20,7 @@ node slave1 {
 include wget
 $slave2_packages = ['php','httpd']
 node slave2 {
-  packages { $slave2_packages :
+  package { $slave2_packages :
     ensure => present,
     enable => true,
     }
