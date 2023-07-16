@@ -22,7 +22,7 @@
         dest: /etc/sysconfig/
         mode: '0664'
 
-    - name: restart ppserver
+    - name: start ppserver
       become: yes
       service:
         name: puppetserver
@@ -31,9 +31,16 @@
     - name: open port
       become: yes
       firewalld:
-        port: 8140
+        zone: public
+        port: 8140/tcp
         permanent: true
         state: enabled
+    
+    - name: restart firewalld
+      become: yes
+      service:
+        name: firewalld
+        state: restarted
 
 - name: slave
   hosts: slave
@@ -53,17 +60,37 @@
         state: present
     
     - name: rework hosts
+      become: yes
       lineinfile:
         path: /etc/hosts
         line: "192.168.30.10 master master"
         state: present
+    
+    - name: get puppet config
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/puppet.conf
+        dest: /etc/puppetlabs/puppet/puppet.conf
+        mode: '0664'
+
+    - name: start ppserver
+      become: yes
+      service:
+        name: puppet
+        state: started
 
     - name: open port
       become: yes
       firewalld:
-        port: 8140
+        zone: public
+        port: 8140/tcp
         permanent: true
         state: enabled
-
+    
+    - name: restart firewalld
+      become: yes
+      service:
+        name: firewalld
+        state: restarted
 
 
