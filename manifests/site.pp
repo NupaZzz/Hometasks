@@ -23,7 +23,7 @@ node slave2 {
     ensure => present,
     }
   wget::fetch { "https://raw.githubusercontent.com/NupaZzz/Hometasks/master/01-vagrant/1/index.php" :
-    destination => '/var/www/html',
+    destination => '/var/www/html/index.php',
     timeout  => 0,
     verbose  => false,
     }
