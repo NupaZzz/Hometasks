@@ -14,5 +14,6 @@ node slave1 {
 </html>',
     require => Package['httpd'],
     ensure => file,
+    enable => true,
   }
 }
