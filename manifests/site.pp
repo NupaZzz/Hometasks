@@ -1,3 +1,11 @@
 node slave1 {
-       class { 'apache': }
+       package { 'httpd':
+              ensure => present,
+       }
+       file { 'index.html' :
+              path => '/var/www/html/index.html',
+              content => "<h1>hello there</h1>",
+              require => Package['httpd'],
+              ensure => file,
+              }
 }
