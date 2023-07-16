@@ -4,7 +4,14 @@ node slave1 {
     }
   file { 'index.html' :
     path => '/var/www/html/index.html',
-    content => '<h1>Hello there</h1>',
+    content => '<html>
+  <head>
+    <title>Success!</title>
+  </head>
+  <body>
+    You Vagrantfile is fine if you can see this message.
+  </body>
+</html>',
     require => Package['httpd'],
     ensure => file,
   }
