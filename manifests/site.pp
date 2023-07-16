@@ -1,5 +1,1 @@
-node slave1 {
-  package { 'httpd' :
-    ensure => present,
-  }
-}
+import node.pp
