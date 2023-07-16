@@ -1,5 +1,5 @@
 node slave1 {
-       package { 'httpd:
+       package { 'httpd':
         ensure => present,
     }
     service { 'httpd':
