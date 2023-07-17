@@ -8,10 +8,6 @@ node slave1 {
     timeout => 0,
     verbose => false,
     }
-  service {'httpd':
-    ensure  => running,
-    require => Package['httpd'],
-    }
 }
 $slave2_packages = ['php','httpd']
 node slave2 {
