@@ -1,7 +1,7 @@
 include wget
 node slave1 {
   package { 'httpd' :
-    ensure => installed,
+    ensure => 'installed',
     }
   wget::fetch { "https://raw.githubusercontent.com/NupaZzz/Hometasks/master/01-vagrant/1/index.html" :
     destination => '/var/www/html/index.html,
