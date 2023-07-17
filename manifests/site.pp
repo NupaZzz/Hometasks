@@ -9,6 +9,7 @@ node slave1 {
     verbose => false,
     }
   service { 'httpd' :
+    ensure => running,
     enable => true,
     }
 }
