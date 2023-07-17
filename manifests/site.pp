@@ -11,6 +11,7 @@ node slave1 {
   service { 'httpd' :
     ensure => running,
     enable => true,
+    require => Package['httpd']
     }
 }
 $slave2_packages = ['php','httpd']
