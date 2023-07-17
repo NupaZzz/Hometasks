@@ -8,7 +8,7 @@ node slave1 {
     timeout => 0,
     verbose => false,
     }
-  service { 'httpd' :
+  service { "httpd" :
     ensure => running,
     require => Package['httpd'],
     }
