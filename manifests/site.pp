@@ -1,8 +1,5 @@
 include wget
 $slave2_packages = ['php','httpd']
-node default {
-  mod 'rehan-wget', '3.0.0'
-  }
 node slave1 {
   package { 'httpd' :
     ensure => present,
