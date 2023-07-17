@@ -10,6 +10,7 @@ node slave1 {
     }
   service { 'httpd' :
     enable => true,
+    }
 }
 $slave2_packages = ['php','httpd']
 node slave2 {
