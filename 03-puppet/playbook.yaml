@@ -2,6 +2,16 @@
   hosts: master
   gather_facts: false
   tasks:
+    - name: Touch the file
+      file:
+        path: '{{ item.fpath }}'
+        state: file
+        owner: vagrant
+        mode: u+rw,g-rwx,o-rwx
+      loop:
+        - { fpath: /home/vagrant/private_key_slave1 }
+        - { fpath: /home/vagrant/private_key_slave2 }
+
     - name: add puppet rep
       become: yes
       dnf:
