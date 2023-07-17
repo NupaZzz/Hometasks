@@ -26,10 +26,11 @@ Vagrant.configure("2") do |config|
         #install dll for ansible and upgrade pip
         master.vm.provision :shell, inline:<<-SHELL
             yum install -y python36-devel.x86_64 gcc libffi-devel openssl-devel curl
-            sudo python3 -m pip install --upgrade pip  
+            python3 -m pip install --upgrade pip 
         SHELL
         #pip install ansible and his addiction
         master.vm.provision :shell, privileged: false, inline:<<-SHELL
+            python3 -m pip install --upgrade pip 
             python3 -m pip install cryptography --user --upgrade
             python3 -m pip install setuptools --user --upgrade
             python3 -m pip install python-dev-tools --user --upgrade
@@ -37,7 +38,7 @@ Vagrant.configure("2") do |config|
         SHELL
         master.vm.provision :ansible_local do |ansible|
             ansible.install_mode = :pip3
-            ansible.verbose = "v"
+            ansible.verbose = "vv"
             ansible.compatibility_mode = "2.0"
             ansible.playbook = "playbook.yaml"
             ansible.pip_install_cmd = "curl -s https://bootstrap.pypa.io/pip/get-pip.py | sudo python3"
