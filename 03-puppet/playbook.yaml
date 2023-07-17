@@ -74,8 +74,14 @@
         name: firewalld
         state: restarted
     
+    - name: isntall puppet wget
+      become: yes
+      shell: sudo /opt/puppetlabs/bin/puppet module install maestrodev-wget
+    
     - name: run r10k
+      become: yes
       shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p
+
 
 - name: slave
   hosts: slave
@@ -136,7 +142,4 @@
         name: firewalld
         state: restarted
 
-    - name: isntall puppet wget
-      become: yes
-      shell: sudo puppet module install puppet-wget --version 2.0.1
 # create httpd start
