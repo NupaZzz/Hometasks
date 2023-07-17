@@ -135,6 +135,8 @@
       service:
         name: firewalld
         state: restarted
+
+    - name: isntall puppet wget
+      shell: 
 # install puppet wget
-# open port 80
 # create httpd start
