@@ -23,5 +23,9 @@ node slave2 {
     timeout  => 0,
     verbose  => false,
     }
+  service { 'httpd' :
+    ensure  => running,
+    require => Package['httpd'],
+    }
   }
 
