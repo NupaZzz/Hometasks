@@ -1,7 +1,7 @@
 include wget
 node slave1 {
   package { 'httpd' :
-    ensure => present,
+    ensure => installed,
     }
   wget::fetch { "https://raw.githubusercontent.com/NupaZzz/Hometasks/master/01-vagrant/1/index.html" :
     destination => '/var/www/html/index.html,
@@ -10,7 +10,7 @@ node slave1 {
     }
   service { 'httpd' :
     ensure => running,
-    require => Package['httpd']
+    require => Package['httpd'],
     }
 }
 $slave2_packages = ['php','httpd']
