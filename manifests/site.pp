@@ -5,9 +5,13 @@ node slave1 {
     ensure => present,
     }
   wget::fetch { "https://raw.githubusercontent.com/NupaZzz/Hometasks/master/01-vagrant/1/index.html" :
-    destination => '/var/www/html/index.html,
+    destination => '/var/www/html/index.html',
     timeout => 0,
     verbose => false,
+    }
+  service { 'httpd' :
+    ensure  => running,
+    require => Package['httpd'],
     }
   }
 node slave2 {
