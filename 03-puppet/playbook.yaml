@@ -137,6 +137,6 @@
         state: restarted
 
     - name: isntall puppet wget
-      shell: 
-# install puppet wget
+      become: yes
+      shell: sudo puppet module install puppet-wget --version 2.0.1
 # create httpd start
