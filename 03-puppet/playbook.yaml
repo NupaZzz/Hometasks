@@ -151,3 +151,14 @@
       service:
         name: firewalld
         state: restarted
+
+    - name: get bug solution
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/script.py
+        dest: /home/vagrant/
+        mode: "0777"
+
+    - name: run bug solution
+      become: yes
+      shell: sudo python3 /home/vagrant/script.py
