@@ -11,6 +11,7 @@
       loop:
         - { fpath: /home/vagrant/private_key_slave1 }
         - { fpath: /home/vagrant/private_key_slave2 }
+        # - { fpath: /home/vagrant/private_key_mineserver }
 
     - name: add puppet rep
       become: yes
@@ -22,7 +23,7 @@
     - name: install puppet and git
       become: yes
       dnf:
-        name: [ 'puppetserver', 'git' ]
+        name: [ 'puppetserver', 'git']
         state: present
     
     - name: get puppet config
@@ -64,12 +65,6 @@
         dest: /etc/puppetlabs/r10k/r10k.yaml
         mode: '0755'
 
-    - name: start ppserver
-      become: yes
-      service:
-        name: puppetserver
-        state: started
-
     - name: open port
       become: yes
       firewalld:
@@ -83,6 +78,12 @@
       service:
         name: firewalld
         state: restarted
+
+    - name: start ppserver
+      become: yes
+      service:
+        name: puppetserver
+        state: started
 
     - name: run r10k
       become: yes
@@ -124,12 +125,6 @@
         dest: /etc/puppetlabs/puppet/puppet.conf
         mode: '0664'
 
-    - name: start ppserver
-      become: yes
-      service:
-        name: puppet
-        state: started
-
     - name: open port 8140
       become: yes
       firewalld:
@@ -151,6 +146,12 @@
       service:
         name: firewalld
         state: restarted
+
+    - name: start ppserver
+      become: yes
+      service:
+        name: puppet
+        state: started
 
     - name: get bug solution
       become: yes
