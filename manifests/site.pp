@@ -1,5 +1,11 @@
 include wget
 $slave2_packages = ['php','httpd']
+$master_pacakges = ['nginx']
+node master {
+  package { $master_pacakges :
+    ensure => present,
+  }
+}
 node slave1 {
   package { 'httpd' :
     ensure => present,
@@ -28,4 +34,3 @@ node slave2 {
     require => Package['httpd'],
     }
   }
-
