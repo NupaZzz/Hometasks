@@ -4,7 +4,7 @@ node master {
   class { 'nginx': 
     manage_repo => true,
     package_source => 'nginx-mainline',
-    }
+  }
   nginx::resourse::server { "" :
     listen_port => 8080,
     proxy => "http://192.168.30.11:80",
