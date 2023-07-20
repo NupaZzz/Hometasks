@@ -69,9 +69,15 @@
       become: yes
       firewalld:
         zone: public
-        port: 8140/tcp
+        port: "{{ item }}"
         permanent: true
         state: enabled
+      with_items:
+        - "80/tcp"
+        - "8140/tcp"
+        - "8081/tcp"
+        - "8080/tcp"
+        - "8082/tcp"
     
     - name: restart firewalld
       become: yes
@@ -83,6 +89,12 @@
       become: yes
       service:
         name: puppetserver
+        state: started
+    
+    - name: start puppet
+      become: yes
+      service:
+        name : puppet
         state: started
 
     - name: run r10k
