@@ -8,12 +8,12 @@ node master {
   nginx::resource::upstream { 'magick':
   members => {
     '192.168.30.11' => {
-      server => '192.168.30.11',
-      port => 80,
+      server => 'localhost',
+      port => 8080,
     },
     '192.168.30.12' => {
-      server => '192.168.30.12',
-      port => 80,
+      server => 'localhost',
+      port => 8081,
       },
    },
 }
