@@ -7,7 +7,7 @@ node master {
   }
   service { $master_pacakges :
     ensure => running,
-    require => Package[$master_packages]}
+    require => Package[$master_packages],
 }
 node slave1 {
   package { 'httpd' :
