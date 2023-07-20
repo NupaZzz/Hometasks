@@ -9,6 +9,10 @@ node master {
     listen_port => 8080,
     proxy       => 'http://192.168.30.11:80',
   }
+  nginx::resource::server { '192.168.30.10':
+    listen_port => 80801,
+    proxy       => 'http://192.168.30.12:80',
+  }
 }
 node slave1 {
   package { 'httpd' :
