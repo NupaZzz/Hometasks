@@ -6,7 +6,7 @@ node master {
     package_source => 'nginx-mainline',
   }
   nginx::resource::server { 'www.static.local':
-    listen_port => 8080,
+    listen_port => 8082,
     proxy       => 'http://192.168.30.11:80',
   }
 }
