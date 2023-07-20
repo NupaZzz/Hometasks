@@ -7,9 +7,9 @@ node master {
   }
   nginx::resource::upstream { 'magick':
   members => {
-    '192.168.30.11:80' => {
+    '192.168.30.11:8080' => {
       server => '192.168.30.10',
-      port   => 8081,
+      port   => 8080,
       weight => 1,
   },
   },
