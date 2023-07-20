@@ -6,8 +6,8 @@ node master {
     package_source => 'nginx-mainline',
   }
   nginx::resource::server { 'static.local':
-    listen_port => 80,
-    proxy       => 'http://localhost:8080',
+    listen_port => 8080,
+    proxy       => 'http://192.168.30.11:80',
   }
 }
 node slave1 {
