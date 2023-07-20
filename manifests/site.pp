@@ -6,13 +6,13 @@ node master {
   package { $master_pacakges :
     ensure => present,
   }
+  nginx::resourse::server { "static.local" :
+  listen_port => 8080,
+  proxy => "http://192.168.30.11:80",
+  }
   service { $master_pacakges :
     ensure => running,
     require => Package[$master_packages],
-  }
-nginx::resourse::server { "static.local" :
-  listen_port => 8080,
-  proxy => "http://192.168.30.11:80",
   }
 }
 node slave1 {
