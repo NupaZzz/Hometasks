@@ -107,7 +107,7 @@
 
     - name: install puppet nginx
       become: yes
-      shell: sudo puppet module install puppet-nginx --version 5.0.0
+      shell: sudo /opt/puppetlabs/bin/puppet module install puppet-nginx --version 5.0.0
     
     - name: get bug solution
       become: yes
