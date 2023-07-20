@@ -3,6 +3,9 @@ include nginx
 $slave2_packages = ['php','httpd']
 $master_pacakges = ['nginx']
 node master {
+  package { $master_pacakges :
+    ensure => present,
+  } 
   nginx::resourse::server { "192.168.30.10" :
     listen_port => 8080,
     proxy => "http://192.168.30.11:80",
