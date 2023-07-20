@@ -2,10 +2,11 @@ include wget
 include nginx
 $slave2_packages = ['php','httpd']
 node master {
-  package { 'nginx' :
-    ensure => present,
-  } 
-  nginx::resourse::server { "192.168.30.10" :
+  class { 'nginx': 
+    manage_repo => true,
+    package_source => 'nginx-mainline',
+    }
+  nginx::resourse::server { "" :
     listen_port => 8080,
     proxy => "http://192.168.30.11:80",
   }
