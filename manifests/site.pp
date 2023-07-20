@@ -17,7 +17,7 @@ node master {
       },
   },
 }
-  nginx::resource::location { '192.168.30.10':
+  nginx::resource::server { '192.168.30.10':
     proxy => 'http://magick',
   }
 }
