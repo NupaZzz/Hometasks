@@ -8,18 +8,12 @@ node master {
   nginx::resource::upstream { 'magick':
   members => {
     '192.168.30.11:80' => {
-      server => '192.168.30.11',
-      port   => 80,
+      server => '192.168.30.10',
+      port   => 8081,
       weight => 1,
-    },
-    '192.168.30.12:80' => {
-      server => '192.168.30.12',
-      port   => 80,
-      weight => 1,
-    },
   },
 }
-  nginx::resource::server { '192.168.30.10:8080':
+  nginx::resource::server { '192.168.30.10':
     proxy => 'http://magick',
   }
 }
