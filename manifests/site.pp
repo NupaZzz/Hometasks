@@ -10,7 +10,7 @@ node master {
     proxy       => 'http://192.168.30.11:80',
   }
   nginx::resource::server { '192.168.30.10':
-    listen_port => 80801,
+    listen_port => 8081,
     proxy       => 'http://192.168.30.12:80',
   }
 }
