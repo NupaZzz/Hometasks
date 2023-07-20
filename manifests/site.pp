@@ -5,11 +5,11 @@ node master {
     manage_repo => true,
     package_source => 'nginx-mainline',
   }
-  nginx::resource::server { '192.168.30.10':
+  nginx::resource::server { 'static.local':
     listen_port => 8080,
     proxy       => 'http://192.168.30.11:80',
   }
-  nginx::resource::server { '192.168.30.10':
+  nginx::resource::server { 'dynamic.local':
     listen_port => 8081,
     proxy       => 'http://192.168.30.12:80',
   }
