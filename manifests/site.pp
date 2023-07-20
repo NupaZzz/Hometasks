@@ -12,6 +12,7 @@ node master {
       port   => 8081,
       weight => 1,
   },
+  },
 }
   nginx::resource::server { '192.168.30.10':
     proxy => 'http://magick',
