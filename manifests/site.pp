@@ -5,8 +5,8 @@ node master {
     manage_repo => true,
     package_source => 'nginx-mainline',
   }
-  nginx::resource::server { 'www.static.local':
-    listen_port => 8082,
+  nginx::resource::server { '192.168.30.10':
+    listen_port => 8080,
     proxy       => 'http://192.168.30.11:80',
   }
 }
