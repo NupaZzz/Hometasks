@@ -2,6 +2,17 @@
   hosts: master
   gather_facts: false
   tasks:
+    - name: Touch the file
+      file:
+        path: '{{ item.fpath }}'
+        state: file
+        owner: vagrant
+        mode: u+rw,g-rwx,o-rwx
+      loop:
+        - { fpath: /home/vagrant/private_key_slave1 }
+        - { fpath: /home/vagrant/private_key_slave2 }
+        # - { fpath: /home/vagrant/private_key_mineserver }
+
     - name: add puppet rep
       become: yes
       dnf:
@@ -12,7 +23,7 @@
     - name: install puppet and git
       become: yes
       dnf:
-        name: [ 'puppetserver', 'git' ]
+        name: [ 'puppetserver', 'git']
         state: present
     
     - name: get puppet config
@@ -54,12 +65,6 @@
         dest: /etc/puppetlabs/r10k/r10k.yaml
         mode: '0755'
 
-    - name: start ppserver
-      become: yes
-      service:
-        name: puppetserver
-        state: started
-
     - name: open port
       become: yes
       firewalld:
@@ -73,6 +78,21 @@
       service:
         name: firewalld
         state: restarted
+
+    - name: start ppserver
+      become: yes
+      service:
+        name: puppetserver
+        state: started
+
+    - name: run r10k
+      become: yes
+      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p   
+    
+    - name: isntall puppet wget
+      become: yes
+      shell: sudo /opt/puppetlabs/bin/puppet module install maestrodev-wget
+    
 
 - name: slave
   hosts: slave
@@ -105,17 +125,19 @@
         dest: /etc/puppetlabs/puppet/puppet.conf
         mode: '0664'
 
-    - name: start ppserver
-      become: yes
-      service:
-        name: puppet
-        state: started
-
-    - name: open port
+    - name: open port 8140
       become: yes
       firewalld:
         zone: public
         port: 8140/tcp
+        permanent: true
+        state: enabled
+
+    - name: open port 80
+      become: yes
+      firewalld:
+        zone: public
+        port: 80/tcp
         permanent: true
         state: enabled
     
@@ -124,3 +146,20 @@
       service:
         name: firewalld
         state: restarted
+
+    - name: start ppserver
+      become: yes
+      service:
+        name: puppet
+        state: started
+
+    - name: get bug solution
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/script.py
+        dest: /home/vagrant/
+        mode: "0777"
+
+    - name: run bug solution
+      become: yes
+      shell: sudo python3 /home/vagrant/script.py
