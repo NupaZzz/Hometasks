@@ -5,20 +5,13 @@ node master {
     manage_repo => true,
     package_source => 'nginx-mainline',
   }
-  nginx::resource::upstream { 'magick':
-  members => {
-    '192.168.30.11' => {
-      server => 'localhost',
-      port => 8080,
-    },
-    '192.168.30.12' => {
-      server => 'localhost',
-      port => 8081,
-      },
-   },
-}
   nginx::resource::server { '192.168.30.10':
-    proxy => 'http://magick',
+    listen_port => 8080,
+    proxy       => 'http://192.168.30.11:80',
+  }
+  nginx::resource::server { '192.168.30.10':
+    listen_port => 8081,
+    proxy       => 'http://192.168.30.12:80',
   }
 }
 node slave1 {
