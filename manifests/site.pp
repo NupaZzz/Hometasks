@@ -1,4 +1,5 @@
 include wget
+include nginx
 $slave2_packages = ['php','httpd']
 node master {
   class { 'nginx': 
