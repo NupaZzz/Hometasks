@@ -6,8 +6,8 @@ node master {
     package_source => 'nginx-mainline',
   }
   nginx::resource::location { '/static' :
-    server => 'http://192.168.30.10,
-    proxy => 'http://192.168.30.11,
+    server => 'http://192.168.30.10',
+    proxy => 'http://192.168.30.11',
   }
 }
 node slave1 {
