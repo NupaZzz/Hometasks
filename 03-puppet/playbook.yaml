@@ -11,7 +11,7 @@
       loop:
         - { fpath: /home/vagrant/private_key_slave1 }
         - { fpath: /home/vagrant/private_key_slave2 }
-        # - { fpath: /home/vagrant/private_key_mineserver }
+        - { fpath: /home/vagrant/private_key_mineserver }
 
     - name: add puppet rep
       become: yes
