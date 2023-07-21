@@ -1,5 +1,6 @@
 include wget
 $slave2_packages = ['php','httpd']
+<<<<<<< HEAD
 node master {
   class { 'nginx': 
     manage_repo => true,
@@ -12,6 +13,12 @@ node master {
   nginx::resource::server { '192.168.30.10:8081':
     listen_port => 8081,
     proxy       => 'http://192.168.30.12:80',
+=======
+$master_pacakges = ['nginx']
+node master {
+  package { $master_pacakges :
+    ensure => present,
+>>>>>>> master
   }
 }
 node slave1 {
@@ -41,4 +48,8 @@ node slave2 {
     ensure  => running,
     require => Package['httpd'],
     }
+<<<<<<< HEAD
   }
+=======
+  }
+>>>>>>> master
