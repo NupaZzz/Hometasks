@@ -69,9 +69,15 @@
       become: yes
       firewalld:
         zone: public
-        port: 8140/tcp
+        port: "{{ item }}"
         permanent: true
         state: enabled
+      with_items:
+        - "80/tcp"
+        - "8140/tcp"
+        - "8081/tcp"
+        - "8080/tcp"
+        - "8082/tcp"
     
     - name: restart firewalld
       become: yes
@@ -84,14 +90,39 @@
       service:
         name: puppetserver
         state: started
-
+    
+    - name: start puppet
+      become: yes
+      service:
+        name : puppet
+        state: started  
+    
     - name: run r10k
       become: yes
-      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p   
-    
-    - name: isntall puppet wget
+      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p 
+
+    - name: install puppet wget
       become: yes
       shell: sudo /opt/puppetlabs/bin/puppet module install maestrodev-wget
+
+    - name: install puppet nginx
+      become: yes
+      shell: sudo /opt/puppetlabs/bin/puppet module install puppet-nginx --version 5.0.0
+
+    - name: get bug solution
+      become: yes
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/script.py
+        dest: /home/vagrant/
+        mode: "0777"
+
+    - name: run bug solution
+      become: yes
+      shell: sudo python3 /home/vagrant/script.py
+
+    - name: off selinux
+      become: yes
+      shell: sudo setenforce 0
     
 
 - name: slave
@@ -133,13 +164,19 @@
         permanent: true
         state: enabled
 
-    - name: open port 80
+    - name: open port
       become: yes
       firewalld:
         zone: public
-        port: 80/tcp
+        port: "{{ item }}"
         permanent: true
         state: enabled
+      with_items:
+        - "80/tcp"
+        - "8140/tcp"
+        - "8081/tcp"
+        - "8080/tcp"
+        - "8082/tcp"
     
     - name: restart firewalld
       become: yes
@@ -163,3 +200,7 @@
     - name: run bug solution
       become: yes
       shell: sudo python3 /home/vagrant/script.py
+
+    - name: off selinux
+      become: yes
+      shell: sudo setenforce 0
