@@ -1,18 +1,17 @@
 include wget
-include nginx
 $slave2_packages = ['php','httpd']
-$master_pacakges = ['nginx']
 node master {
-  package { $master_pacakges :
-    ensure => present,
+  class { 'nginx': 
+    manage_repo => true,
+    package_source => 'nginx-mainline',
   }
-  nginx::resourse::server { "192.168.30.10" :
+  nginx::resource::server { '192.168.30.10:8080':
     listen_port => 8080,
-    proxy => "http://192.168.30.11:80",
+    proxy       => 'http://192.168.30.11:80',
   }
-  service { $master_pacakges :
-    ensure => running,
-    require => Package[$master_packages],
+  nginx::resource::server { '192.168.30.10:8081':
+    listen_port => 8081,
+    proxy       => 'http://192.168.30.12:80',
   }
 }
 node slave1 {
