@@ -90,7 +90,6 @@
       service:
         name: puppetserver
         state: started
-<<<<<<< HEAD
     
     - name: start puppet
       become: yes
@@ -124,16 +123,6 @@
     - name: off selinux
       become: yes
       shell: sudo setenforce 0
-=======
-
-    - name: run r10k
-      become: yes
-      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p   
-    
-    - name: isntall puppet wget
-      become: yes
-      shell: sudo /opt/puppetlabs/bin/puppet module install maestrodev-wget
->>>>>>> master
     
 
 - name: slave
@@ -175,7 +164,6 @@
         permanent: true
         state: enabled
 
-<<<<<<< HEAD
     - name: open port
       become: yes
       firewalld:
@@ -189,15 +177,6 @@
         - "8081/tcp"
         - "8080/tcp"
         - "8082/tcp"
-=======
-    - name: open port 80
-      become: yes
-      firewalld:
-        zone: public
-        port: 80/tcp
-        permanent: true
-        state: enabled
->>>>>>> master
     
     - name: restart firewalld
       become: yes
@@ -221,10 +200,66 @@
     - name: run bug solution
       become: yes
       shell: sudo python3 /home/vagrant/script.py
-<<<<<<< HEAD
 
     - name: off selinux
       become: yes
       shell: sudo setenforce 0
-=======
->>>>>>> master
+
+- name: mineserver
+  hosts: mineserver
+  become: yes
+  tasks:
+    - name: add puppetserver rep
+      dnf:
+        name: https://yum.puppet.com/puppet7-release-el-8.noarch.rpm  
+        state: present
+        disable_gpg_check: true
+    
+    - name: install puppet agent
+      dnf:
+        name: puppet-agent
+        state: present
+    
+    - name: rework hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "192.168.30.10 master"
+        state: present
+    
+    - name: get puppet config
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/puppet.conf
+        dest: /etc/puppetlabs/puppet/puppet.conf
+        mode: '0664'
+
+    - name: open port
+      firewalld:
+        zone: public
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+      with_items:
+        - "8140/tcp"
+        - "25565/tcp"
+
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+
+    - name: start ppserver
+      service:
+        name: puppet
+        state: started
+
+    - name: get bug solution
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/03-puppet/script.py
+        dest: /home/vagrant/
+        mode: "0777"
+
+    - name: run bug solution
+      shell: sudo python3 /home/vagrant/script.py
+
+    - name: off selinux
+      shell: sudo setenforce 0
