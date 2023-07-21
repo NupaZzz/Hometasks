@@ -95,12 +95,12 @@
       become: yes
       service:
         name : puppet
-        state: started
-
+        state: started  
+    
     - name: run r10k
       become: yes
-      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p   
-    
+      shell: sudo /opt/puppetlabs/puppet/bin/r10k deploy environment -p 
+
     - name: install puppet wget
       become: yes
       shell: sudo /opt/puppetlabs/bin/puppet module install maestrodev-wget
@@ -108,7 +108,7 @@
     - name: install puppet nginx
       become: yes
       shell: sudo /opt/puppetlabs/bin/puppet module install puppet-nginx --version 5.0.0
-    
+
     - name: get bug solution
       become: yes
       get_url:
@@ -119,6 +119,10 @@
     - name: run bug solution
       become: yes
       shell: sudo python3 /home/vagrant/script.py
+
+    - name: off selinux
+      become: yes
+      shell: sudo setenforce 0
     
 
 - name: slave
@@ -196,3 +200,7 @@
     - name: run bug solution
       become: yes
       shell: sudo python3 /home/vagrant/script.py
+
+    - name: off selinux
+      become: yes
+      shell: sudo setenforce 0
