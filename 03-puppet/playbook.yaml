@@ -204,6 +204,7 @@
     - name: off selinux
       become: yes
       shell: sudo setenforce 0
+<<<<<<< HEAD
 
 - name: mineserver
   hosts: mineserver
@@ -263,3 +264,5 @@
 
     - name: off selinux
       shell: sudo setenforce 0
+=======
+>>>>>>> 3389c9c4e595150c2f452a92a595c19e8de3d5cf
