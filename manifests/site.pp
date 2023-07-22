@@ -43,9 +43,9 @@ node slave2 {
     }
   }
 node mineserver {
- class { 'java':
-  distribution => 'jre',
-  }
+  package { 'java-11-openjdk' :
+    ensure => present,
+    }
   file { '/opt/minecraft':
     ensure => 'directory',
     owner  => 'root',
