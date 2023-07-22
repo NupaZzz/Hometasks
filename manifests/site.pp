@@ -49,22 +49,17 @@ node mineserver {
   }
   file { '/opt/minecraft':
     ensure => 'directory',
-    owner  => 'minecraft',
-    group  => 'minecraft',
+    owner  => 'root',
+    group  => 'root',
     }
   wget::fetch { "https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar" :
     destination => '/opt/minecraft/server.jar',
     timeout => 0,
     verbose => false,
     }
-  file { '/opt/minecraft/eula.txt':
-    content => "eula=true",
-    owner   => 'minecraft',
-    group   => 'minecraft',
-  }
   exec { 'start_minecraft_server':
     command => 'java -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
-    user    => 'minecraft',
+    user    => 'root',
     cwd => '/opt/minecraft',
     path => '/usr/bin:/usr/sbin:/bin:/sbin'
   }
