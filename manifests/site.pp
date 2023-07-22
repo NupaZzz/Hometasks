@@ -55,6 +55,6 @@ node mineserver {
     verbose => false,
     }
   class { 'java':
-    package => 'java-1.8.0-openjdk-devel',
+  distribution => 'jre',
   }
-  }
+}
