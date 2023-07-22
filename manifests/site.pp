@@ -43,10 +43,9 @@ node slave2 {
     }
   }
 node mineserver {
-  
   class minecraft_server {
     package { ['openjdk-8-jre-headless', 'screen']:
-    ensure => 'installed',
+      ensure => 'installed',
   }
     file { '/opt/minecraft':
       ensure => 'directory',
@@ -72,5 +71,6 @@ node mineserver {
     require => [File['/opt/minecraft'], Exec['start_minecraft_server']],
   }
   class { 'minecraft_server': }
+}
 }
  
