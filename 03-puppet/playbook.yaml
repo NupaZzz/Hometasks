@@ -207,6 +207,7 @@
 
     - name: off selinux
       become: yes
+<<<<<<< HEAD
       shell: sudo setenforce 0
 
 - name: mineserver
@@ -267,3 +268,6 @@
 
     - name: off selinux
       shell: sudo setenforce 0
+=======
+      shell: sudo setenforce 0
+>>>>>>> master

@@ -1,7 +1,7 @@
 master  ansible_host=192.168.30.10  ansible_connection=local
 
-[minecraft]
-mineserver  ansible_host=192.168.30.13  ansible_ssh_private_key_file=/home/vagrant/private_key_mineserver
+#[minecraft]
+#mineserver  ansible_host=192.168.30.13  ansible_ssh_private_key_file=/home/vagrant/private_key_mineserver
 
 [slave]
 slave1  ansible_host=192.168.30.11  ansible_ssh_private_key_file=/home/vagrant/private_key_slave1
