@@ -1,6 +1,5 @@
 include wget
 $slave2_packages = ['php','httpd']
-$mineserver = ['openjdk-8-jre-headless', 'screen']
 node master {
   class { 'nginx': 
     manage_repo => true,
@@ -44,8 +43,8 @@ node slave2 {
     }
   }
 node mineserver {
- class { 'java' :
-  package => 'java-1.8.0-openjdk-devel',
+ class { 'java':
+  distribution => 'jre',
   }
   file { '/opt/minecraft':
     ensure => 'directory',
