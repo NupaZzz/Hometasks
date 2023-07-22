@@ -72,6 +72,10 @@ node mineserver {
     mode   => '0644',
     content => "server-port=25565\n",
   }
+  file { '/opt/minecraft/eula.txt':
+    ensure  => present,
+    content => "eula=true\n",
+  }
   file { '/etc/systemd/system/minecraft.service':
     ensure => 'file',
     owner  => 'root',
