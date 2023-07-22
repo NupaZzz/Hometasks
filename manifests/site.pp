@@ -81,7 +81,7 @@ node mineserver {
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
-    content => "[Unit]\nDescription=Minecraft Server\nAfter=network.target\n\n[Service]\nType=simple\nUser=minecraft\nWorkingDirectory=/opt/minecraft\nExecStart=/usr/bin/java -Xmx1024M -Xms512M -jar server.jar nogui\nExecStop=/usr/bin/screen -p 0 -S minecraft -X eval 'stuff \"say Сервер Minecraft остановлен.\"\\015'\nExecStop=/bin/sleep 5\nExecStop=/usr/bin/screen -p 0 -S minecraft -X eval 'stuff \"stop\\015\"'\nRestartSec=3\nRestart=always\n\n[Install]\nWantedBy=multi-user.target\n",
+    content => "[Unit]\nDescription=Minecraft Server\nAfter=network.target\n\n[Service]\nType=simple\nUser=minecraft\nWorkingDirectory=/opt/minecraft\nExecStart=/usr/bin/java -Xmx1024M -Xms1024M -jar server.jar nogui\nExecStop=/usr/bin/screen -p 0 -S minecraft -X eval 'stuff \"say Сервер Minecraft остановлен.\"\\015'\nExecStop=/bin/sleep 5\nExecStop=/usr/bin/screen -p 0 -S minecraft -X eval 'stuff \"stop\\015\"'\nRestartSec=3\nRestart=always\n\n[Install]\nWantedBy=multi-user.target\n",
   }
   exec { 'systemctl daemon-reload':
     command => '/bin/systemctl daemon-reload',
