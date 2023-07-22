@@ -44,8 +44,8 @@ node slave2 {
     }
   }
 node mineserver {
-  package { $mineserver :
-    ensure => 'installed',
+ class { 'java' :
+  package => 'java-1.8.0-openjdk-devel',
   }
   file { '/opt/minecraft':
     ensure => 'directory',
@@ -63,7 +63,7 @@ node mineserver {
     group   => 'minecraft',
   }
   exec { 'start_minecraft_server':
-    command => '/bin/screen/screen -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
+    command => 'java -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
     user    => 'minecraft',
   }
   service { 'minecraft_server':
