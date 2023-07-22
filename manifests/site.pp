@@ -63,7 +63,7 @@ node mineserver {
     group   => 'minecraft',
   }
   exec { 'start_minecraft_server':
-    command => 'screen -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
+    command => '/bin/screen/screen -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
     user    => 'minecraft',
   }
   service { 'minecraft_server':
