@@ -43,7 +43,7 @@ node slave2 {
     }
   }
 node mineserver {
-  package { 'java-11-openjdk' :
+  package { 'java-17-openjdk.x86_64' :
     ensure => present,
     }
   file { '/opt/minecraft/server.jar':
