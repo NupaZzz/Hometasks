@@ -43,17 +43,12 @@ node slave2 {
     }
   }
 node mineserver {
-  file {'/opt/minecraft/' :
-    ensure => directory,
-    mode => '755'
-    owner => 'root'
-    group => 'root'
-    }
-  wget::getch { "https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar" :
+  wget::fetch { "https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar" :
     destination => '/opt/minecraft/server.jar',
     timeout => 0,
     verbose => false,
     }
   class { 'java':
     package => 'java-1.8.0-openjdk-devel',
+  }
   }
