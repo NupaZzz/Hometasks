@@ -54,7 +54,7 @@ node mineserver {
     timeout => 0,
     verbose => false,
     }
-  class { 'java':
-  distribution => 'jre',
+  class { 'java' :
+    package => 'java-1.8.0-openjdk',
   }
 }
