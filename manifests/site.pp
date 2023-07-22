@@ -58,7 +58,7 @@ node mineserver {
     verbose => false,
     }
   exec { 'start_minecraft_server':
-    command => 'java -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
+    command => 'java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
     user    => 'root',
     cwd => '/opt/minecraft',
     path => '/usr/bin:/usr/sbin:/bin:/sbin'
