@@ -70,5 +70,5 @@ node mineserver {
     require => [File['/opt/minecraft'], Exec['start_minecraft_server']],
   }
 }
-}
+
  
