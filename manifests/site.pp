@@ -1,5 +1,6 @@
 include wget
 $slave2_packages = ['php','httpd']
+$server_dir = '/opt/minecraft'
 node master {
   class { 'nginx': 
     manage_repo => true,
@@ -43,18 +44,34 @@ node slave2 {
     }
   }
 node mineserver {
-  file {'/opt/minecraft' :
-    ensure => directory,
-    mode => '775',
-    owner => 'root',
-    group => 'root',
+  class { 'java' :
+    package => 'java-1.8.0-openjdk',
+    ensure => 'installed',
+  }
+  class minecraft_server {
+    file { '/opt/minecraft':
+      ensure => 'directory',
+      owner  => 'minecraft',
+      group  => 'minecraft',
     }
   wget::fetch { "https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar" :
     destination => '/opt/minecraft/server.jar',
     timeout => 0,
     verbose => false,
     }
-  class { 'java' :
-    package => 'java-1.8.0-openjdk',
+  file { '/opt/minecraft/eula.txt':
+    content => "eula=true",
+    owner   => 'minecraft',
+    group   => 'minecraft',
   }
+  exec { 'start_minecraft_server':
+    command => 'screen -dmS minecraft java -Xmx1G -Xms1G -jar /opt/minecraft/server.jar nogui',
+    user    => 'minecraft',
+  }
+  service { 'minecraft_server':
+    ensure  => 'running',
+    require => [File['/opt/minecraft'], Exec['start_minecraft_server']],
+  }
+  class { 'minecraft_server': }
 }
+ 
