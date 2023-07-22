@@ -43,14 +43,13 @@ node slave2 {
     }
   }
 node mineserver {
-  class minecraft_server {
-    package { ['openjdk-8-jre-headless', 'screen']:
-      ensure => 'installed',
+  package { ['openjdk-8-jre-headless', 'screen']:
+    ensure => 'installed',
   }
-    file { '/opt/minecraft':
-      ensure => 'directory',
-      owner  => 'minecraft',
-      group  => 'minecraft',
+  file { '/opt/minecraft':
+    ensure => 'directory',
+    owner  => 'minecraft',
+    group  => 'minecraft',
     }
   wget::fetch { "https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar" :
     destination => '/opt/minecraft/server.jar',
@@ -70,7 +69,6 @@ node mineserver {
     ensure  => 'running',
     require => [File['/opt/minecraft'], Exec['start_minecraft_server']],
   }
-  class { 'minecraft_server': }
 }
 }
  
