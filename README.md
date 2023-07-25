@@ -1,6 +1,7 @@
-# IT-Academy DevOps hometasks
+# IT-Academy DevOps home tasks
 ## first task is complete
 ## second task is complete
-    Please use port 8080,8081 in the second subtask.
+    Please use ports 8080,8081 in the second subtask.
 ## third task is complete
-    Please use Vagrantfile and another files from master branch
+    Please use Vagrantfile and other files from the master branch
+## fourth task is complete
