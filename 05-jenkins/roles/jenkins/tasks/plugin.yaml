@@ -1,0 +1,15 @@
+---
+- name: install plugins
+  jenkins_plugin:
+      name: "{{ item.key }}"
+      url: http://192.168.30.10:8080
+      url_username: admin
+      url_password: admin
+  register: plugin_result
+  until: plugin_result is success
+  retries: 50
+  delay: 5
+  with_items:
+      - {key: 'groovy'}
+      - {key: 'git'}
+      - {key: 'pipeline'}
