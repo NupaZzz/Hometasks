@@ -12,4 +12,5 @@
   retries: "{{ jenkins_connection_retries }}"
   delay: "{{ jenkins_connection_delay }}"
   with_items: "{{ jenkins_plugins }}"
-      
+
+- include_tasks: restart.yaml
