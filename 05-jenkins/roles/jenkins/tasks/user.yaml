@@ -9,7 +9,7 @@
 - name: create user file
   file:
     path: /var/lib/jenkins/init.groovy.d/user.groovy
-    state: file
+    state: touch
     owner: root
     group: root
     mode: '0755'
@@ -26,4 +26,5 @@
     - 'hudsonRealm.createAccount("admin", "admin")'
     - 'jenkins.setSecurityRealm(hudsonRealm)'
     - 'jenkins.save()'
-  
+
+- include_tasks: restart.yaml
