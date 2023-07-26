@@ -1,0 +1,29 @@
+---
+- name: apt
+  apt:
+    update_cache: yes
+
+- name: install repo
+  shell: curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+- name: same install
+  shell: echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \ https://pkg.jenkins.io/debian binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+- name: apt
+  apt:
+    update_cache: yes
+
+- name: Java and git install
+  apt:
+    package: ['openjdk-17-jdk', 'git']
+    state: present
+
+- name: jenkins install
+  shell: apt-get install -y jenkins
+
+- name: Unlock jenkins
+  lineinfile:
+    path: /lib/systemd/system/jenkins.service
+    regexp: '^Environment="JAVA_OPTS=-Djava.awt.headless=true'
+    line: 'Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+  register: result_skip_startup_wizard

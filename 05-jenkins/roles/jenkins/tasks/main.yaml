@@ -1,0 +1,3 @@
+- include_tasks: settings.yaml
+- include_tasks: user.yaml
+- include_tasks: plugin.yaml

@@ -2,6 +2,7 @@
   hosts: jenkins
   become: true
 
+<<<<<<< HEAD
   tasks:
     - name: apt
       apt:
@@ -58,3 +59,7 @@
       with_items:
         - {key: 'groovy'}
         - {key: 'git'}
+=======
+  roles:
+    - jenkins
+>>>>>>> ea16281ce3d2e58255e7f01b8eec3fcc2d306593
