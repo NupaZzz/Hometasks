@@ -19,6 +19,11 @@
           line: 'Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
       register: result_skip_startup_wizard
 
+    - name: reload
+      service:
+        name: jenkins
+        state: restarted
+
     - name: create dir /var/lib/jenkins/init.groovy.d
       file:
         path: /var/lib/jenkins/init.groovy.d/
@@ -26,6 +31,11 @@
         owner: root
         group: root
         mode: '0755'
+
+    - name: get config user for jenkins
+      get_url:
+        url: https://raw.githubusercontent.com/NupaZzz/Hometasks/master/05-jenkins/user.groovy
+        dest: /var/lib/jenkins/init.groovy.d/user.groovy
 
     - name: create user file
       file:
