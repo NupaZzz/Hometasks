@@ -1,15 +1,15 @@
 ---
-- name: install plugins
+- name: Install Jenkins plugins
   jenkins_plugin:
-      name: "{{ item.key }}"
-      url: http://192.168.30.10:8080
-      url_username: admin
-      url_password: admin
+      name: "{{ item }}"
+      url: "{{ jenkins_hostname }}"
+      url_username: "{{ jenkins_admin_username }}"
+      url_password: "{{ jenkins_admin_password }}"
+      with_dependencies: "{{ jenkins_plugins_install_dependencies }}"
+      updates_expiration: "{{ jenkins_plugin_updates_expiration }}"
   register: plugin_result
   until: plugin_result is success
-  retries: 50
-  delay: 5
-  with_items:
-      - {key: 'groovy'}
-      - {key: 'git'}
-      - {key: 'pipeline'}
+  retries: "{{ jenkins_connection_retries }}"
+  delay: "{{ jenkins_connection_delay }}"
+  with_items: "{{ jenkins_plugins }}"
+      

@@ -23,7 +23,7 @@
 
 - name: Unlock jenkins
   lineinfile:
-    path: /lib/systemd/system/jenkins.service
+    path: "{{ jenkins_init_folder }}"
     regexp: '^Environment="JAVA_OPTS=-Djava.awt.headless=true'
-    line: 'Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+    line: 'Environment="JAVA_OPTS=-Djava.awt.headless=true {{ jenkins_java_options }}"'
   register: result_skip_startup_wizard

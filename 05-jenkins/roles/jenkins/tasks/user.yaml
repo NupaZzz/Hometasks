@@ -1,6 +1,6 @@
 - name: create dir /var/lib/jenkins/init.groovy.d
   file:
-    path: /var/lib/jenkins/init.groovy.d/
+    path: "{{ jenkins_home }}/init.groovy.d"
     state: directory
     owner: root
     group: root
@@ -8,7 +8,7 @@
 
 - name: create user file
   file:
-    path: /var/lib/jenkins/init.groovy.d/user.groovy
+    path: "{{ jenkins_home }}/init.groovy.d/user.groovy"
     state: touch
     owner: root
     group: root
@@ -16,14 +16,14 @@
 
 - name: create user
   lineinfile:
-    dest: /var/lib/jenkins/init.groovy.d/user.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/user.groovy"
     line: '{{ item }}'
   with_items:
     - 'import jenkins.model.*'
     - 'import hudson.security.*'
     - 'def jenkins = Jenkins.getInstance()'
     - 'def hudsonRealm = new HudsonPrivateSecurityRealm(false)'
-    - 'hudsonRealm.createAccount("admin", "admin")'
+    - 'hudsonRealm.createAccount("{{ jenkins_admin_username }}", "{{ jenkins_admin_password }}")'
     - 'jenkins.setSecurityRealm(hudsonRealm)'
     - 'jenkins.save()'
 
