@@ -17,7 +17,8 @@ jenkins_plugins:
   - ssh-credentials
   - workflow-scm-step
   - pipeline
-  - ssh
+  - publish-over-ssh
+  - SSH Credentials Plugin
   - sshd
   - ssh-slaves
   - timestamper
@@ -27,3 +28,7 @@ jenkins_plugins:
   - git
   - nexus-artifact-uploader
   - configuration-as-code
+  - Maven Integration Plugin
+  - JUnit Plugin
+  - SonarQube Plugin
+  - Python
