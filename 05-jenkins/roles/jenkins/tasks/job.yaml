@@ -1,0 +1,2 @@
+- name: Create and build job
+  shell: python "{{ python_job_dir }}word-cloud-generator.py"

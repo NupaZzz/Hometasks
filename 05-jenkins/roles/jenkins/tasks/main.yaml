@@ -1,3 +1,8 @@
 - include_tasks: settings.yaml
 - include_tasks: user.yaml
 - include_tasks: plugin.yaml
+- include_tasks: creds.yaml
+- include_tasks: golang.yaml
+- include_tasks: restart.yaml
+- include_tasks: pip.yaml
+- include_tasks: job.yaml

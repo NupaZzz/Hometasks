@@ -28,7 +28,6 @@ jenkins_plugins:
   - git
   - nexus-artifact-uploader
   - configuration-as-code
-  - Maven Integration Plugin
   - JUnit Plugin
-  - SonarQube Plugin
   - Python
+python_job_dir: "/vagrant/roles/jenkins/jobs/"

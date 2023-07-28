@@ -1,0 +1,8 @@
+---
+- name: install golang in jenkins
+  copy:
+    src: /vagrant/roles/jenkins/files/org.jenkinsci.plugins.golang.GolangBuildWrapper.xml
+    dest: "{{ jenkins_home }}/org.jenkinsci.plugins.golang.GolangBuildWrapper.xml"
+    owner: root
+    group: root
+    mode: '0644'

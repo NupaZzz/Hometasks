@@ -1,8 +1,8 @@
 ---
-- name: copy scripts
+- name: copy creds groovy 
   copy:
-    src: /vagrant/05-jenkins/roles/jenkins/files/2cred.groovy
-    dest: "{{ jenkins_home }}/init.groovy.d/2cred.groovy"
+    src: /vagrant/roles/jenkins/files/2creds.groovy
+    dest: "{{ jenkins_home }}/init.groovy.d/2creds.groovy"
     owner: root
     group: root
-    mode: '0755'
+    mode: '0644'

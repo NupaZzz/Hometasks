@@ -1,0 +1,4 @@
+---
+- name: pip install requirements
+  pip:
+    requirements: /vagrant/roles/jenkins/defaults/requirements.txt
