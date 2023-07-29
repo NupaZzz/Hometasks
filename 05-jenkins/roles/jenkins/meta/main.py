@@ -1,5 +1,5 @@
 galaxy_info:
-    author: NupaZzz
+    author: Vladislav Stroev
     description: Role for install jenkins
     company: hometasks
 
