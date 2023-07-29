@@ -1,5 +1,5 @@
 - name: Configure jenkins
-  hosts: jenkins
+  hosts: master
   become: true
 
   roles:

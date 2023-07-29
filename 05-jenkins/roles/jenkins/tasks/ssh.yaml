@@ -1,0 +1,11 @@
+---
+- name: ssh key
+  file:
+    path: '{{ item.fpath }}'
+    state: file
+    owner: vagrant
+    mode: u+rw,g-rwx,o-rwx
+  loop:
+    - { fpath: /home/vagrant/private_key_nexus }
+    - { fpath: /home/vagrant/private_key_staging }
+    - { fpath: /home/vagrant/private_key_production }
