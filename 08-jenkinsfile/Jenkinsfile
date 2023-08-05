@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    
+    environment {
+        NEXUS_IP = "192.168.33.90"
+        STAGING_IP = "192.168.33.80"
+        PRODUCTION_IP = "192.168.33.85"
+        NEXUS_CREDS = credentials('nexus-creds')
+    }
+    
+    stages {
+        stage('Скачивание исходных кодов') {
+            steps {
+                git 'https://github.com/wickett/word-cloud-generator'
+            }
+        }
+        
+        stage('Проверка исходных кодов и тесты') {
+            steps {
+                sh 'make lint'
+                sh 'make test'
+            }
+        }
+        
+        stage('Сборка и загрузка артефактов в Nexus') {
+            steps {
+                sh 'mvn clean install'
+                sh 'mvn deploy -Dmaven.deploy.skip=true -Dmaven.test.skip=true -DaltDeploymentRepository=nexus::default::http://${NEXUS_IP}/repository/maven-releases'
+            }
+        }
+        
+        stage('Установка приложения на staging сервер и запуск integration-тестов') {
+            parallel {
+                stage('Установка на staging сервер') {
+                    steps {
+                        sh "ssh user@${STAGING_IP} 'sudo apt-get update && sudo apt-get install -y word-cloud-generator'"
+                    }
+                }
+                
+                stage('Запуск integration-тестов') {
+                    steps {
+                        sh "ssh user@${STAGING_IP} 'make integration-test'"
+                    }
+                }
+            }
+        }
+        
+        stage('Установка приложения на production сервер') {
+            when {
+                expression {
+                    currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                sh "ssh user@${PRODUCTION_IP} 'sudo apt-get update && sudo apt-get install -y word-cloud-generator'"
+            }
+        }
+    }
+}
