@@ -1,58 +1,63 @@
 pipeline {
     agent any
-    
     environment {
-        NEXUS_IP = "192.168.33.90"
-        STAGING_IP = "192.168.33.80"
-        PRODUCTION_IP = "192.168.33.85"
+        NEXUS_URL = 'http://192.168.33.90'
         NEXUS_CREDS = credentials('nexus-creds')
+        STAGING_HOST = '192.168.33.80'
+        PROD_HOST = '192.168.33.85'
+        SSH_USER = 'vagrant'
+        SSH_PASS = credentials('ssh-creds')
     }
-    
     stages {
-        stage('Скачивание исходных кодов') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/wickett/word-cloud-generator'
+                git url: 'https://github.com/wickett/word-cloud-generator.git', branch: 'master'
             }
         }
-        
-        stage('Проверка исходных кодов и тесты') {
+        stage('Lint and Test') {
             steps {
                 sh 'make lint'
                 sh 'make test'
             }
         }
-        
-        stage('Сборка и загрузка артефактов в Nexus') {
+        stage('Build and Upload') {
             steps {
-                sh 'mvn clean install'
-                sh 'mvn deploy -Dmaven.deploy.skip=true -Dmaven.test.skip=true -DaltDeploymentRepository=nexus::default::http://${NEXUS_IP}/repository/maven-releases'
+                sh 'make build'
+                sh "curl -u ${NEXUS_CREDS_USR}:${NEXUS_CREDS_PSW} -X POST ${NEXUS_URL}/repository/word-cloud-generator/ -F file=@word-cloud-generator.zip"
             }
         }
-        
-        stage('Установка приложения на staging сервер и запуск integration-тестов') {
-            parallel {
-                stage('Установка на staging сервер') {
-                    steps {
-                        sh "ssh user@${STAGING_IP} 'sudo apt-get update && sudo apt-get install -y word-cloud-generator'"
+        stage('Deploy and Test on Staging') {
+            steps {
+                parallel (
+                    "Staging 1": {
+                        sshagent(credentials: ['ssh-creds']) {
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'curl -O ${NEXUS_URL}/repository/word-cloud-generator/word-cloud-generator.zip'"
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'unzip word-cloud-generator.zip'"
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make install'"
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make integration-test'"
+                        }
+                    },
+                    "Staging 2": {
+                        sshagent(credentials: ['ssh-creds']) {
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'curl -O ${NEXUS_URL}/repository/word-cloud-generator/word-cloud-generator.zip'"
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'unzip word-cloud-generator.zip'"
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make install'"
+                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make integration-test'"
+                        }
                     }
-                }
-                
-                stage('Запуск integration-тестов') {
-                    steps {
-                        sh "ssh user@${STAGING_IP} 'make integration-test'"
-                    }
-                }
+                )
             }
         }
-        
-        stage('Установка приложения на production сервер') {
+        stage('Deploy on Production') {
             when {
-                expression {
-                    currentBuild.result == 'SUCCESS'
-                }
+                branch 'master'
             }
             steps {
-                sh "ssh user@${PRODUCTION_IP} 'sudo apt-get update && sudo apt-get install -y word-cloud-generator'"
+                sshagent(credentials: ['ssh-creds']) {
+                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${PROD_HOST} 'curl -O ${NEXUS_URL}/repository/word-cloud-generator/word-cloud-generator.zip'"
+                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${PROD_HOST} 'unzip word-cloud-generator.zip'"
+                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${PROD_HOST} 'cd word-cloud-generator && make install'"
+                }
             }
         }
     }
