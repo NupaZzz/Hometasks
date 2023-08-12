@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/wickett/word-cloud-generator.git', branch: 'master'
+                git 'https://github.com/NupaZzz/word-cloud-generator.git'
             }
         }
         stage('Lint and Test') {
