@@ -1,16 +1,8 @@
 pipeline {
     agent any
-    environment {
-        NEXUS_URL = 'http://192.168.33.90'
-        NEXUS_CREDS = credentials('nexus-creds')
-        STAGING_HOST = '192.168.33.80'
-        PROD_HOST = '192.168.33.85'
-        SSH_USER = 'vagrant'
-        SSH_PASS = credentials('ssh-creds')
-    }
     stages {
         stage('Checkout') {
-            steps {
+             steps {
                 git 'https://github.com/NupaZzz/word-cloud-generator.git'
             }
         }
@@ -23,41 +15,6 @@ pipeline {
         stage('Build and Upload') {
             steps {
                 sh 'make build'
-                sh "curl -u ${NEXUS_CREDS_USR}:${NEXUS_CREDS_PSW} -X POST ${NEXUS_URL}/repository/word-cloud-generator/ -F file=@word-cloud-generator.zip"
-            }
-        }
-        stage('Deploy and Test on Staging') {
-            steps {
-                parallel (
-                    "Staging 1": {
-                        sshagent(credentials: ['ssh-creds']) {
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'curl -O ${NEXUS_URL}/repository/word-cloud-generator/word-cloud-generator.zip'"
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'unzip word-cloud-generator.zip'"
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make install'"
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make integration-test'"
-                        }
-                    },
-                    "Staging 2": {
-                        sshagent(credentials: ['ssh-creds']) {
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'curl -O ${NEXUS_URL}/repository/word-cloud-generator/word-cloud-generator.zip'"
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'unzip word-cloud-generator.zip'"
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make install'"
-                            sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${STAGING_HOST} 'cd word-cloud-generator && make integration-test'"
-                        }
-                    }
-                )
-            }
-        }
-        stage('Deploy on Production') {
-            when {
-                branch 'master'
-            }
-            steps {
-                sshagent(credentials: ['ssh-creds']) {
-                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${PROD_HOST} 'curl -O ${NEXUS_URL}/repository/word-cloud-generator/word-cloud-generator.zip'"
-                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${PROD_HOST} 'unzip word-cloud-generator.zip'"
-                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${PROD_HOST} 'cd word-cloud-generator && make install'"
-                }
             }
         }
     }
