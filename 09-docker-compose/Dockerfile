@@ -26,7 +26,7 @@ COPY --chown=jenkins:jenkins /jenkins/plugins.txt /usr/share/jenkins/ref/plugins
 RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
 
 #Установка скриптов
-COPY ./2creds.groovy /usr/share/jenkins/ref/init.groovy.d/2creds.groovy
+COPY ./jenkins/2creds.groovy /usr/share/jenkins/ref/init.groovy.d/2creds.groovy
 COPY ./jenkins/casc.yaml /var/jenkins_home/casc.yaml
 
 #Настройка pipeline
