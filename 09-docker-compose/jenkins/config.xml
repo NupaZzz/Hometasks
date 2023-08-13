@@ -27,6 +27,16 @@
 							sh &apos;make test&apos;
 						}
 					}
+					stage(&apos;build and upload&apos;) {
+						steps {
+							sh &apos;&apos;&apos;sed -i &quot;s/1.DEVELOPMENT/1.$BUILD_NUMBER/g&quot; static/version
+								GOOS=linux GOARCH=amd64 go build -o ./artifacts/word-cloud-generator -v
+								md5sum artifacts/word-cloud-generator
+								gzip -f artifacts/word-cloud-generator
+								ls -l artifacts/
+							&apos;&apos;&apos;
+						}
+					}
                 }
             }
 		</script>
