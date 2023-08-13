@@ -16,9 +16,15 @@
 					NEXUS_CREDS_ID = &quot;nexus-creds&quot;
 				}
 				stages {
-					stage(&apos;Get Word-Cloud-Generator&apos;) {
+					stage(&apos;Get rep&apos;) {
 						steps {
 							git branch: &quot;$BRANCH&quot;, url: &apos;https://github.com/NupaZzz/word-cloud-generator.git&apos;
+						}
+					}
+					stage(&apos;make test&apos;) {
+						steps {
+ 							sh &apos;make lint&apos;
+							sh &apos;make test&apos;
 						}
 					}
                 }
