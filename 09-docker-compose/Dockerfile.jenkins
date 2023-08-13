@@ -28,6 +28,7 @@ RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
 #Установка скриптов
 COPY ./jenkins/2creds.groovy /usr/share/jenkins/ref/init.groovy.d/2creds.groovy
 COPY ./jenkins/casc.yaml /var/jenkins_home/casc.yaml
+COPY ./jenkins/nexuscreds.groovy /usr/share/jenkins/ref/init.groovy.d/nexuscreds.groovy
 
 #Настройка pipeline
 COPY --chown=jenkins:jenkins /jenkins/config.xml /var/jenkins_home/jobs/cloud-pipeline/config.xml
