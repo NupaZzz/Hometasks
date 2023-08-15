@@ -12,8 +12,11 @@
 				}
 				environment {
 					BRANCH = &quot;master&quot;
-					NEXUS_IP = &quot;192.168.33.30&quot;
+					NEXUS_IP = &quot;192.168.100.100&quot;
+					NEXUS_PORT = &quot;8081&quot;
+					NEXUS_REPO_NAME = &quot;word-cloud-repo&quot;
 					NEXUS_CREDS_ID = &quot;nexus-creds&quot;
+					
 				}
 				stages {
 					stage(&apos;Get rep&apos;) {
@@ -35,6 +38,22 @@
 								gzip -f artifacts/word-cloud-generator
 								ls -l artifacts/
 							&apos;&apos;&apos;
+
+							nexusArtifactUploader(
+								nexusVersion: &apos;nexus3&apos;,
+								protocol: &apos;http&apos;,
+								nexusUrl: &quot;${NEXUS_IP}:${NEXUS_PORT}&quot;,
+								groupId: &apos;pipeline&apos;,
+								version: &apos;1.$BUILD_NUMBER&apos;,
+								repository: &quot;${NEXUS_REPO_NAME}&quot;,
+								credentialsId: &quot;${NEXUS_CREDS_ID}&quot;,
+								artifacts: [
+									[artifactId: &apos;word-cloud-generator&apos;,
+									classifier: &apos;&apos;,
+									file: &apos;artifacts/word-cloud-generator.gz&apos;,
+									type: &apos;gz&apos;]
+								]
+							)
 						}
 					}
                 }
