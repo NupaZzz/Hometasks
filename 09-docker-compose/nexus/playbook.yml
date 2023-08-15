@@ -1,0 +1,48 @@
+---
+- name: Nexus config
+  hosts: nexus
+  become: true
+  roles:
+    - geerlingguy.nexus3-oss
+
+  pre_tasks:
+    - name: Add key
+      apt_key:
+        url: https://download.bell-sw.com/pki/GPG-KEY-bellsoft
+
+    - name: Add repository
+      apt_repository:
+        repo: deb [arch=amd64] https://apt.bell-sw.com/ stable main
+        state: present
+        update_cache: true
+
+    - name: Install Java
+      apt:
+        name: bellsoft-java8-full
+        state: present
+
+  vars:
+    nexus_admin_password: "admin"
+    nexus_delete_default_repos: true
+    nexus_config_raw: true
+
+    nexus_repos_raw_hosted:
+      - name: word-cloud-repo
+        blob_store: default
+
+    nexus_roles:
+      - id: nx-uploader
+        name: nx-uploader
+        description: Role nx-uploader
+        privileges:
+          - nx-repository-view-raw-word-cloud-repo-*
+        roles: []
+
+    nexus_local_users:
+      - username: "{{ username }}"
+        password: "{{ password }}"
+        first_name: Jenkins
+        last_name: CI
+        email: support@company.com
+        roles:
+          - nx-uploader

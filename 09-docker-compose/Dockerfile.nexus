@@ -1,0 +1,25 @@
+FROM debian
+
+# install plugins
+RUN apt-get update && \
+    apt-get install -y vim mc ansible sshpass git gnupg rsync bash
+
+# copy ansible in docker
+COPY ./nexus/playbook.yml /ansible/playbook.yml
+COPY ./nexus/requirements.yml /ansible/requirements.yml
+COPY ./nexus/inventory /ansible/inventory
+
+WORKDIR /ansible/
+
+# Nexus credential
+ARG username=nexus
+ARG password=nexus
+
+# ansible playbook install
+RUN ansible-galaxy install -r requirements.yml
+RUN ansible-playbook -i inventory playbook.yml -e "username=$username password=$password"
+
+# open port
+EXPOSE 8081
+
+CMD ["sh", "-c", "/opt/nexus-latest/bin/nexus run"]
