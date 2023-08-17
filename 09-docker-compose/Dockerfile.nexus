@@ -11,13 +11,9 @@ COPY ./nexus/inventory /ansible/inventory
 
 WORKDIR /ansible/
 
-# Nexus credential
-ARG username=nexus
-ARG password=nexus
-
 # ansible playbook install
 RUN ansible-galaxy install -r requirements.yml
-RUN ansible-playbook -i inventory playbook.yml -e "username=$username password=$password"
+RUN ansible-playbook -i inventory playbook.yml
 
 # open port
 EXPOSE 8081

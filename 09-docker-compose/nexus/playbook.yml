@@ -39,8 +39,8 @@
         roles: []
 
     nexus_local_users:
-      - username: "{{ username }}"
-        password: "{{ password }}"
+      - username: nexus
+        password: nexus
         first_name: Jenkins
         last_name: CI
         email: support@company.com

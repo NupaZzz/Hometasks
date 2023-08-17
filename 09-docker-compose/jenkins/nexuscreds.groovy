@@ -9,7 +9,7 @@ def credentialsStore = Jenkins.instance.getExtensionList('com.cloudbees.plugins.
 def domain = Domain.global()
 def credentials = new UsernamePasswordCredentialsImpl(
     CredentialsScope.GLOBAL,
-    '2',
+    'nexus-creds',
     'nexus-creds',
     'nexus',
     'nexus'

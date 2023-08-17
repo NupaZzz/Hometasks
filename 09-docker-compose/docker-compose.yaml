@@ -9,12 +9,10 @@ services:
       - "8080:8080"
     depends_on:
       - nexus
+      
   nexus:
     build:
       context: .
       dockerfile: Dockerfile.nexus
-      args:
-        - username=nexus
-        - password=nexus
     ports:
       - "8081:8081"
