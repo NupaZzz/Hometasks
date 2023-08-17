@@ -4,4 +4,5 @@
     Please use ports 8080,8081 in the second subtask.
 ## third task is complete
     Please use Vagrantfile and other files from the master branch
-## fourth task is complete
+## docker compose task is complete
+    Please change the IP to your local IP in /09-docker-compose/jenkins/config.xml
