@@ -6,3 +6,4 @@
     Please use Vagrantfile and other files from the master branch
 ## docker compose task is complete
     Please change the IP to your local IP in /09-docker-compose/jenkins/config.xml
+    Maybe someday I will make a script to change the address to a local :P
