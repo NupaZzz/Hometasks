@@ -6,13 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile.jenkins
     ports:
-      - "8080:8080"
+      - "80:8080"
     depends_on:
       - nexus
-      
+
   nexus:
     build:
       context: .
       dockerfile: Dockerfile.nexus
     ports:
-      - "8081:8081"
+      - "81:8081"

@@ -13,7 +13,7 @@
 				environment {
 					BRANCH = &quot;master&quot;
 					NEXUS_IP = &quot;192.168.100.100&quot;
-					NEXUS_PORT = &quot;8081&quot;
+					NEXUS_PORT = &quot;81&quot;
 					NEXUS_REPO_NAME = &quot;word-cloud-repo&quot;
 					NEXUS_CREDS_ID = &quot;nexus-creds&quot;
 					
