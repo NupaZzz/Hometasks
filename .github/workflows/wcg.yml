@@ -6,9 +6,17 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: wcg
+  REPO_OWNER: ${{ github.repository_owner }}
+  DOCKER_TAG: ${{ github.sha }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout code
@@ -18,12 +26,13 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build and push Docker image
-        env:
-          REPO: ${{ env.GITHUB_REPOSITORY_OWNER }}
-          TAG: ${{ github.sha }}
-          TOKEN: ${{ secrets.ACTION_TOKEN }}
-        run: |
-          echo $TOKEN | docker login ghcr.io -u $REPO --password-stdin
-          docker buildx build --platform linux/amd64 -t ghcr.io/$REPO/wcg:$TAG -t ghcr.io/$REPO/wcg:latest -f Dockerfile.multi .
-          docker push ghcr.io/$REPO/wcg:$TAG
-          docker push ghcr.io/$REPO/wcg:latest
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: ./07-docker
+          file: ./07-docker/Dockerfile.multi
+          push: true
+          tags: |
+            ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
+            ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:latest
+        
