@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: wcg
-  REPO_OWNER: ${{ github.repository_owner }}
+  OWNER: ${{ github.repository_owner }}
   DOCKER_TAG: ${{ github.sha }}
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
           echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
         env:
           OWNER: '${{ github.repository_owner }}'
-      
+          
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -39,6 +39,6 @@ jobs:
           file: ./07-docker/Dockerfile.multi
           push: true
           tags: |
-            ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
-            ghcr.io/${{ env.REPO_OWNER }}/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ env.OWNER }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
+            ghcr.io/${{ env.OWNER }}/${{ env.IMAGE_NAME }}:latest
         
