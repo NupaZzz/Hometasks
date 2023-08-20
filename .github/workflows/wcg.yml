@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: wcg
-  OWNER: '${{ github.repository_owner.lowercase }}'
+  OWNER: '${{ github.repository_owner.lowercase() }}'
   DOCKER_TAG: ${{ github.sha }}
 
 jobs:
