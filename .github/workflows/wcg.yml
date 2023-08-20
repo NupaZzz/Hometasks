@@ -36,7 +36,6 @@ jobs:
           context: ./07-docker
           file: ./07-docker/Dockerfile.multi
           push: true
-          runs-on: self-hosted
           tags: |
             ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
             ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:latest
