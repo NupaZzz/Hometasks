@@ -19,6 +19,9 @@ jobs:
       packages: write
 
     steps:
+      - name: Print env
+        run: echo "github_actor:=${{ github.actor }} repo_owner:= $REPO_OWNER  docker_tag:= $DOCKER_TAG"
+        
       - name: Checkout code
         uses: actions/checkout@v3
 
