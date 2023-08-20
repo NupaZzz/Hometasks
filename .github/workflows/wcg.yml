@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: wcg
-  OWNER: '${{ github.repository_owner.lowercase() }}'
+  OWNER: '${{ github.repository_owner }}'
   DOCKER_TAG: ${{ github.sha }}
 
 jobs:
@@ -19,9 +19,12 @@ jobs:
       packages: write
 
     steps:
-      - name: Print env
-        run: echo "github_actor:=${{ github.actor }} repo_owner:= $REPO_OWNER  docker_tag:= $DOCKER_TAG"
-        
+      - name: set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.repository_owner }}'
+      
       - name: Checkout code
         uses: actions/checkout@v3
 
