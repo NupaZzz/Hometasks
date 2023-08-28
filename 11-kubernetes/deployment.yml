@@ -16,4 +16,4 @@ spec:
         - name: word-cloud-generator
           image: ghcr.io/nupazzz/wcg:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8888
