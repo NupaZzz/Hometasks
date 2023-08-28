@@ -1,0 +1,29 @@
+replicaCount: 1
+
+ports:
+  name: TCP
+  port: 8888
+  targetPort: 8888
+
+deploy:
+  name: word-cloud-generator-deployment
+
+image:
+  repository: ghcr.io/nupazzz/wcg
+  tag: latest
+
+container:
+  name: word-cloud-generator
+  label:
+    key: app
+    value: word-cloud-generator
+
+ingress:
+  name: word-cloud-generator-ingress
+  host: localhost
+  path: /wcg
+  pathType: Prefix
+
+service:
+  name: word-cloud-generator-service
+  type: ClusterIP
