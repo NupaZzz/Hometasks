@@ -26,3 +26,8 @@ service_type    = "ClusterIP"
 #Git var
 
 git_repo_url    = "Hometasks"
+git_branch      = "master"
+git_dir         = "13-terraform"
+git_commit      = "Managed by Terraform"
+git_author      = "Vladislav Stroev"
+git_email       = "Nupalolz@gmail.com"
