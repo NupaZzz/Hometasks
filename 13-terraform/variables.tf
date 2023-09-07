@@ -91,5 +91,4 @@ variable "create_index" {
 variable "git_token" {
   description = "token"
   type        = string
-  sensitive = true
 }
