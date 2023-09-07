@@ -93,3 +93,28 @@ variable "git_token" {
   type        = string
   sensitive = true
 }
+
+variable "git_branch" {
+  description = "The branch on github"
+  type        = string
+}
+
+variable "git_dir" {
+  description = "The directory on github"
+  type        = string
+}
+
+variable "git_commit" {
+  description = "Commit message on github"
+  type        = string
+}
+
+variable "git_author" {
+  description = "Author on github"
+  type        = string
+}
+
+variable "git_email" {
+  description = "Author email on github"
+  type        = string
+}
