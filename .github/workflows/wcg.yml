@@ -52,6 +52,16 @@ jobs:
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
           chmod +x get_helm.sh
           ./get_helm.sh
+          
+      - name: Create release tag
+        run: |
+          git config user.name 'NupaZzz'
+          git config user.email 'Nupalolz@gmail.com'
+          git tag -a v1.0.0 -m "Version 1.0.0"
+          git push origin v1.0.0
 
       - name: Check Helm chart
         run: helm lint ./12-helm
+        
+      - name: Package Helm chart
+        run: helm package ./12-helm
