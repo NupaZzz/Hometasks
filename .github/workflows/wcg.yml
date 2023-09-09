@@ -48,17 +48,19 @@ jobs:
             ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
             ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:latest
 
+      - name: Create release tag
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config --global user.email "Nupalolz@gmail.com"
+          git config --global user.name '{OWNER}'
+          git tag -a v1.0.0 -m "Version 1.0.0"
+          git push origin v1.0.0
+
       - name: Install Helm
         run: |
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
           chmod +x get_helm.sh
           ./get_helm.sh
-          
-      - name: Create release tag
-        if: github.ref == 'refs/heads/master'
-        run: |
-          git tag -a v1.0.0 -m "Version 1.0.0"
-          git push origin v1.0.0
 
       - name: Check Helm chart
         run: helm lint ./12-helm
