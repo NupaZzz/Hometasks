@@ -8,6 +8,7 @@ env:
   IMAGE_NAME: wcg
   DOCKER_TAG: ${{ github.sha }}
   OWNER: '${{ github.repository_owner }}'
+  OWNER_EMAIL: Nupalolz@gmail.com
 
 jobs:
   build-and-push:
@@ -55,8 +56,8 @@ jobs:
           
       - name: Create release tag
         run: |
-          git config user.name 'NupaZzz'
-          git config user.email 'Nupalolz@gmail.com'
+          git config user.name ${{ env.OWNER_LC }}
+          git config user.email ${{ OWNER_EMAIL }}
           git tag -a v1.0.0 -m "Version 1.0.0"
           git push origin v1.0.0
 
