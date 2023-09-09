@@ -8,6 +8,7 @@ env:
   IMAGE_NAME: wcg
   DOCKER_TAG: ${{ github.sha }}
   OWNER: '${{ github.repository_owner }}'
+  TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build-and-push:
@@ -54,6 +55,7 @@ jobs:
           ./get_helm.sh
           
       - name: Create release tag
+        if: github.ref == 'refs/heads/master'
         run: |
           git config user.name '${{ github.repository_owner }}'
           git config user.email 'Nupalolz@gmail.com'
