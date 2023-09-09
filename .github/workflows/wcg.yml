@@ -57,8 +57,8 @@ jobs:
 
       - name: Check Helm chart
         run: |
-          helm lint /Hometasks/12-helm/Chart.yaml
-          helm lint -f /Hometasks/12-helm/values.yaml
+          helm lint ./12-helm/Chart.yaml
+          helm lint -f ./12-helm/values.yaml
           
       - name: Package Helm chart
-        run: helm package /Hometasks/12-helm/Chart.yaml
+        run: helm package ./12-helm/Chart.yaml
