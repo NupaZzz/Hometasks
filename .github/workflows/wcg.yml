@@ -7,7 +7,8 @@ on:
 env:
   IMAGE_NAME: wcg
   DOCKER_TAG: ${{ github.sha }}
-  OWNER: '${{ github.repository_owner }}'
+  OWNER: ${{ github.repository_owner }}
+  LATEST_TAG: ${{ steps.tag_version.outputs.new_tag }}
 
 jobs:
   build-and-push:
@@ -36,17 +37,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v4
-        with:
-          context: ./07-docker
-          file: ./07-docker/Dockerfile.multi
-          push: true
-          tags: |
-            ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
-            ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:latest
-
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
@@ -59,6 +49,17 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
+
+      - name: Build and push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: ./07-docker
+          file: ./07-docker/Dockerfile.multi
+          push: true
+          tags: |
+            ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
+            ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.LATEST_TAG }}
 
       - name: Install Helm
         run: |
