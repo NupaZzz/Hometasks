@@ -55,7 +55,7 @@ jobs:
           
       - name: Create release tag
         run: |
-          git config user.name ${{ env.OWNER_LC }}
+          git config user.name 'Vladislav Stroev'
           git config user.email 'Nupalolz@gmail.com'
           git tag -a v1.0.0 -m "Version 1.0.0"
           git push origin v1.0.0
