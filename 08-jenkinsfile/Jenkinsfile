@@ -1,21 +1,52 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-             steps {
-                git 'https://github.com/NupaZzz/word-cloud-generator.git'
+				agent any
+				options {
+					timestamps()
+				}
+				environment {
+					BRANCH = "master"
+					NEXUS_IP = "192.168.100.100"
+					NEXUS_PORT = "81"
+					NEXUS_REPO_NAME = "word-cloud-repo"
+					NEXUS_CREDS_ID = "nexus-creds"
+
+                stages {
+					stage("Get rep") {
+						steps {
+							git branch: "$BRANCH", url: "https://github.com/NupaZzz/word-cloud-generator.git"
+						}
+					}
+				stage('make test') {
+						steps {
+ 							sh 'make lint'
+							sh 'make test'
+						}
+					}
+				stage('build and upload') {
+					steps {
+						sh '''sed -i "s/1.DEVELOPMENT/1.$BUILD_NUMBER/g" static/version
+							GOOS=linux GOARCH=amd64 go build -o ./artifacts/word-cloud-generator -v
+							md5sum artifacts/word-cloud-generator
+							gzip -f artifacts/word-cloud-generator
+							ls -l artifacts/
+						'''
+
+						nexusArtifactUploader(
+							nexusVersion: 'nexus3',
+							protocol: 'http',
+							nexusUrl: "${NEXUS_IP}:${NEXUS_PORT}",
+							groupId: 'pipeline',
+							version: '1.$BUILD_NUMBER',
+							repository: "${NEXUS_REPO_NAME}",
+							credentialsId: "${NEXUS_CREDS_ID}",
+							artifacts: [
+								[artifactId: 'word-cloud-generator',
+								classifier: '',
+								file: 'artifacts/word-cloud-generator.gz',
+								type: 'gz']
+							]
+						)
+					}
+				}
             }
         }
-        stage('Lint and Test') {
-            steps {
-                sh 'make lint'
-                sh 'make test'
-            }
-        }
-        stage('Build and Upload') {
-            steps {
-                sh 'make build'
-            }
-        }
-    }
-}
