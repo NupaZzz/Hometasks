@@ -8,7 +8,6 @@ env:
   IMAGE_NAME: wcg
   DOCKER_TAG: ${{ github.sha }}
   OWNER: ${{ github.repository_owner }}
-  LATEST_TAG: ${{ steps.tag_version.outputs.new_tag }}
 
 jobs:
   build-and-push:
@@ -59,7 +58,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
-            ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ env.LATEST_TAG }}
+            ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ steps.tag_version.outputs.new_tag }}
 
       - name: Install Helm
         run: |
