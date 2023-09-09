@@ -54,4 +54,4 @@ jobs:
           ./get_helm.sh
 
       - name: Check Helm chart
-        run: helm lint Hometasks/12-helm
+        run: helm lint ./12-helm
