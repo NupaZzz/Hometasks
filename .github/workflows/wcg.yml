@@ -65,7 +65,7 @@ jobs:
         
       - name: Package Helm chart
         run: |
-          helm package ./12-helm/
+          helm package ./12-helm/*
           
 
         
