@@ -64,7 +64,11 @@ jobs:
         run: helm lint ./12-helm
 
       - name: Create Packages Directory
-        run: mkdir packages
+        run: |
+          mkdir packages
+          git add packages
+          git commit -m "Packages"
+          git push
         
       - name: Package Helm chart
         run: helm package ./12-helm --destination ./packages
