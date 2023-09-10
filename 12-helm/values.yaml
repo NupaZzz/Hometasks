@@ -10,7 +10,7 @@ deploy:
 
 image:
   repository: ghcr.io/nupazzz/wcg
-  tag: v0.0.42
+  tag: v0.0.45
 
 container:
   name: word-cloud-generator
