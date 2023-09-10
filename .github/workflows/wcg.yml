@@ -72,8 +72,8 @@ jobs:
         run: |
           helm lint ./12-helm
 
-      - name: Create package directroy
-        run: mkdir package
+      # - name: Create package directroy
+      #   run: mkdir package
         
       - name: Package Helm chart
         run: |
