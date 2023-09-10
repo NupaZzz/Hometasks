@@ -70,6 +70,7 @@ jobs:
 
       - name: Update Repository Index
         run: |
+          helm repo list
           helm repo index ./12-helm --url https://nupazzz.github.io/Hometasks/12-helm
           
 
