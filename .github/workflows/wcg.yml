@@ -68,10 +68,18 @@ jobs:
         run: |
           helm package ./12-helm
 
-      - name: Update Repository Index
+      - name: Create Helm Repository
         run: |
-          helm repo list
-          helm repo index ./12-helm --url https://nupazzz.github.io/Hometasks/12-helm
+          helm repo add myrepo https://nupazzz.github.io/Hometasks/12-helm
+          helm repo index .
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "Nupalolz@gmail.com"
+          git config --local user.name "NupaZzz"
+          git add .
+          git commit -m "Update Helm repository"
+          git push
           
 
         
