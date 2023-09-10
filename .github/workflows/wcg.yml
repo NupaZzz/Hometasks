@@ -49,6 +49,14 @@ jobs:
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
 
+      - name: Update Helm chart version
+        run: |
+          sed -i "s/version: .*/version: $(echo \"${{ steps.tag_version.outputs.new_tag }}\" | sed -e 's/\./\\./g')/" ./12-helm/Chart.yaml
+
+      - name: Update Docker image tag in Helm chart
+        run: |
+          sed -i "s/tag: .*/tag: ${{ steps.tag_version.outputs.new_tag }}/" ./12-helm/values.yaml
+
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v4
@@ -63,19 +71,25 @@ jobs:
       - name: Check Helm chart
         run: |
           helm lint ./12-helm
+
+      - name: Create package directroy
+        run: mkdir package
         
       - name: Package Helm chart
         run: |
-          helm package ./12-helm
+          helm package ./12-helm --destination ./package
 
       - name: Create Helm Repository
         run: |
           helm repo index .
 
       - name: Commit Changes
+        env:
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_AUTHOR_EMAIL: ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
         run: |
-          git config --local user.email "Nupalolz@gmail.com"
-          git config --local user.name "NupaZzz"
+          git config --local user.email "${GIT_AUTHOR_EMAIL}"
+          git config --local user.name "${GIT_AUTHOR_NAME}"
           git add .
           git commit -m "Update Helm repository"
           git push
