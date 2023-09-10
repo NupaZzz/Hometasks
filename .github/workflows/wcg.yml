@@ -62,11 +62,11 @@ jobs:
 
       - name: Check Helm chart
         run: helm lint ./12-helm
+
+      - name: Create Packages Directory
+        run: mkdir packages
         
       - name: Package Helm chart
-        run: helm package ./12-helm
-
-      - name: Update repository index
-        run: helm repo index ./12-helm
+        run: helm package ./12-helm --destination ./packages
 
         
