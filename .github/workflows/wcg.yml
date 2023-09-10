@@ -64,6 +64,6 @@ jobs:
         run: helm lint ./12-helm
         
       - name: Package Helm chart
-        run: helm package ./12-helm --destination .
+        run: helm package ./12-helm
 
         
