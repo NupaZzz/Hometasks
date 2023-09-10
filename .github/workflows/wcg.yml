@@ -65,16 +65,7 @@ jobs:
         
       - name: Package Helm chart
         run: |
-          helm package ./12-helm --destination ./
+          helm package ./12-helm/
           
-      - name: Configure Git user
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          
-      - name: Run chart-releaser job
-        uses: helm/chart-releaser-action@v1.4.0
-        env:
-          CR_TOKEN: "${{ secrets.GHA_TOKEN }}"
 
         
