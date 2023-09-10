@@ -67,6 +67,6 @@ jobs:
         run: helm package ./12-helm
 
       - name: Install Helm chart
-        run: helm install ./12-helm
+        run: helm install ${{ env.IMAGE_NAME }}:${{ steps.tag_version.outputs.new_tag }} ./12-helm
 
         
