@@ -64,6 +64,9 @@ jobs:
         run: helm lint ./12-helm
         
       - name: Package Helm chart
-        run: helm package ./12-helm --values values.yaml
+        run: helm package ./12-helm
+
+      - name: Install Helm chart
+        run: helm install ./12-helm
 
         
