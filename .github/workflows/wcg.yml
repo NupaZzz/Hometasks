@@ -61,11 +61,16 @@ jobs:
             ghcr.io/${{ env.OWNER_LC }}/${{ env.IMAGE_NAME }}:${{ steps.tag_version.outputs.new_tag }}
 
       - name: Check Helm chart
-        run: helm lint ./12-helm
+        run: |
+          helm lint ./12-helm
         
       - name: Package Helm chart
         run: |
-          helm package ./12-helm/*
+          helm package ./12-helm
+
+      - name: Update Repository Index
+        run: |
+          helm repo index . --url https://nupazzz.github.io/Hometasks/12-helm
           
 
         
