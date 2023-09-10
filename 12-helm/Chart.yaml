@@ -1,5 +1,5 @@
 apiVersion: v2
 name: wcg
-version: "v0.0.45"
+version: "v0.0.49"
 appVersion: 1.0.0
 description: WCG helm chart
