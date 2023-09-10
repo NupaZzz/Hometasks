@@ -66,9 +66,8 @@ jobs:
       - name: Package Helm chart
         run: |
           helm package ./12-helm --destination ./
-
-      - name: Update Docker image tag in Helm chart
-        run: |
-          sed -i "s~tag: latest~tag: ${{ steps.tag_version.outputs.new_tag }}~" ./12-helm/values.yaml
+          
+      - name: Add Helm chart repo
+        run: helm repo add helm-charts https://nupazzz.github.io/Hometasks/
 
         
