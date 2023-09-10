@@ -70,15 +70,15 @@ jobs:
 
       - name: Create Helm Repository
         run: |
-          helm repo index .
+          helm repo index ./12-helm .
 
-      # - name: Commit Changes
-      #   run: |
-      #     git config --local user.email "Nupalolz@gmail.com"
-      #     git config --local user.name "NupaZzz"
-      #     git add .
-      #     git commit -m "Update Helm repository"
-      #     git push
+      - name: Commit Changes
+        run: |
+          git config --local user.email "Nupalolz@gmail.com"
+          git config --local user.name "NupaZzz"
+          git add .
+          git commit -m "Update Helm repository"
+          git push
           
 
         
