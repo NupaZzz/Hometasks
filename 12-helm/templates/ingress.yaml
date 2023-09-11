@@ -18,5 +18,5 @@ spec:
                   number: {{ .Values.ports.port }}
 status:
   loadBalancer:
-    ip: 10.97.86.162
-    type: LoadBalancer
+    ingress:
+    - ip: 10.97.86.162
