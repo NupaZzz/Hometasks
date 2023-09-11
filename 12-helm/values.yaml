@@ -20,7 +20,7 @@ container:
 
 ingress:
   name: word-cloud-generator-ingress
-  host: localhost
+  host: sites.local
   path: /wcg
   pathType: Prefix
 
