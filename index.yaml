@@ -3,7 +3,16 @@ entries:
   wcg:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-11T21:43:51.273118053Z"
+    created: "2023-09-11T21:54:38.746861923Z"
+    description: WCG helm chart
+    digest: 0cc3acdbf9c440a4e3f32c3e193f0afccf5fb03348a5c3f67751ac0a72e52b6e
+    name: wcg
+    urls:
+    - package/wcg-v0.0.52.tgz
+    version: v0.0.52
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-09-11T21:54:38.746500719Z"
     description: WCG helm chart
     digest: e75018637723aacaef6f7244f062ba6f957406ea2bc888f73812a5325b506b61
     name: wcg
@@ -12,7 +21,7 @@ entries:
     version: v0.0.51
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-11T21:43:51.272901951Z"
+    created: "2023-09-11T21:54:38.746164714Z"
     description: WCG helm chart
     digest: 5ede6bd569189fdbddb78a043cea1aca2f7868fbf9caf390c7e0a1af9bedb4c9
     name: wcg
@@ -21,11 +30,11 @@ entries:
     version: v0.0.50
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-11T21:43:51.272669049Z"
+    created: "2023-09-11T21:54:38.745687609Z"
     description: WCG helm chart
     digest: c455ffd783669c5f58aedaca5168f2fbca160c5720e031d0cd0537291b7bc1ea
     name: wcg
     urls:
     - package/wcg-v0.0.49.tgz
     version: v0.0.49
-generated: "2023-09-11T21:43:51.272247845Z"
+generated: "2023-09-11T21:54:38.743119577Z"
