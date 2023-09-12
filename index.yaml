@@ -3,74 +3,83 @@ entries:
   wcg:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.124570979Z"
+    created: "2023-09-12T08:35:30.35153288Z"
+    description: WCG helm chart
+    digest: 266cf1fb1ac000bf278dcd356127827a29622f7d81869f0dd8b468a537593536
+    name: wcg
+    urls:
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.58.tgz
+    version: v0.0.58
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-09-12T08:35:30.350983968Z"
     description: WCG helm chart
     digest: 0ef033013f362084474d5102bd163e115156f9605a34a732dad89ba36fe02969
     name: wcg
     urls:
-    - package/wcg-v0.0.57.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.57.tgz
     version: v0.0.57
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.12436118Z"
+    created: "2023-09-12T08:35:30.350457756Z"
     description: WCG helm chart
     digest: f3d74d9913a0e666c00d1934e5e8348c4e5110f311fb8ffd3b8531706f7f41e5
     name: wcg
     urls:
-    - package/wcg-v0.0.56.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.56.tgz
     version: v0.0.56
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.124124582Z"
+    created: "2023-09-12T08:35:30.349839943Z"
     description: WCG helm chart
     digest: 7501113fe84b531e29821323a1b3b1d0e3737096735e514dd8e14fcd59fa0324
     name: wcg
     urls:
-    - package/wcg-v0.0.54.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.54.tgz
     version: v0.0.54
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.123917584Z"
+    created: "2023-09-12T08:35:30.348994324Z"
     description: WCG helm chart
     digest: b41f33bef614c5ec2c88089b629aaccf5074a5de9527ecb7c43a362caedc2738
     name: wcg
     urls:
-    - package/wcg-v0.0.53.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.53.tgz
     version: v0.0.53
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.123686586Z"
+    created: "2023-09-12T08:35:30.311744404Z"
     description: WCG helm chart
     digest: 0cc3acdbf9c440a4e3f32c3e193f0afccf5fb03348a5c3f67751ac0a72e52b6e
     name: wcg
     urls:
-    - package/wcg-v0.0.52.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.52.tgz
     version: v0.0.52
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.123456588Z"
+    created: "2023-09-12T08:35:30.311484398Z"
     description: WCG helm chart
     digest: e75018637723aacaef6f7244f062ba6f957406ea2bc888f73812a5325b506b61
     name: wcg
     urls:
-    - package/wcg-v0.0.51.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.51.tgz
     version: v0.0.51
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.123203989Z"
+    created: "2023-09-12T08:35:30.310599979Z"
     description: WCG helm chart
     digest: 5ede6bd569189fdbddb78a043cea1aca2f7868fbf9caf390c7e0a1af9bedb4c9
     name: wcg
     urls:
-    - package/wcg-v0.0.50.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.50.tgz
     version: v0.0.50
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-09-12T07:24:44.122955991Z"
+    created: "2023-09-12T08:35:30.310305372Z"
     description: WCG helm chart
     digest: c455ffd783669c5f58aedaca5168f2fbca160c5720e031d0cd0537291b7bc1ea
     name: wcg
     urls:
-    - package/wcg-v0.0.49.tgz
+    - https://nupazzz.github.io/Hometasks/package/wcg-v0.0.49.tgz
     version: v0.0.49
-generated: "2023-09-12T07:24:44.122487395Z"
+generated: "2023-09-12T08:35:30.309785061Z"
