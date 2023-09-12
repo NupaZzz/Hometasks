@@ -80,8 +80,10 @@ jobs:
           helm package ./12-helm --destination ./package
 
       - name: Create Helm Repository
+        env:
+          GITHUB_PAGES_URL: https://nupazzz.github.io/Hometasks/
         run: |
-          helm repo index .
+          helm repo index . --url ${{ env.GITHUB_PAGES_URL }}
 
       - name: Commit Changes
         env:
